@@ -4,7 +4,6 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PRODUCTS, ProductSpec } from '../../shared/product-data';
 
-// Local interface for the featured products (modal)
 interface FeaturedProduct {
   title: string;
   image: string;
@@ -26,14 +25,13 @@ interface HeroSlide {
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // Reference to the name input in the contact form
   @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>;
 
   // ================= CONTACT FORM =================
   contactForm = {
     name: '',
     email: '',
-    mobile: '',        // <-- NEW field
+    mobile: '',
     service: '',
     message: ''
   };
@@ -45,23 +43,60 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private route: ActivatedRoute) {}
 
-  // ================= WHATSAPP =================
-  sendToWhatsApp() {
-    if (this.toastTimeout) {
-      clearTimeout(this.toastTimeout);
+  // ================= VALIDATION =================
+  private showToastMessage(msg: string): void {
+    if (this.toastTimeout) clearTimeout(this.toastTimeout);
+    this.toastMessage = msg;
+    this.showToast = true;
+    this.toastTimeout = setTimeout(() => {
+      this.showToast = false;
       this.toastTimeout = null;
+    }, 3500);
+  }
+
+  private validateForm(): boolean {
+    // 1. Name: required, max 100 chars
+    const name = this.contactForm.name.trim();
+    if (!name) {
+      this.showToastMessage('Please enter your full name.');
+      return false;
+    }
+    if (name.length > 100) {
+      this.showToastMessage('Name must be under 100 characters.');
+      return false;
     }
 
-    // Validation
-    if (!this.contactForm.name || !this.contactForm.message) {
-      this.toastMessage = 'Please fill in your name and message.';
-      this.showToast = true;
-      this.toastTimeout = setTimeout(() => {
-        this.showToast = false;
-        this.toastTimeout = null;
-      }, 3500);
-      return;
+    // 2. Mobile: required, exactly 10 digits, numeric only
+    const mobile = this.contactForm.mobile.trim();
+    if (!mobile) {
+      this.showToastMessage('Please enter your mobile number.');
+      return false;
     }
+    if (!/^\d{10}$/.test(mobile)) {
+      this.showToastMessage('Mobile number must be exactly 10 digits (numbers only).');
+      return false;
+    }
+
+    // 3. Email: optional, but if provided max 50 chars
+    const email = this.contactForm.email.trim();
+    if (email && email.length > 50) {
+      this.showToastMessage('Email address must be under 50 characters.');
+      return false;
+    }
+
+    // 4. Message: optional, but if provided max 500 chars
+    const message = this.contactForm.message.trim();
+    if (message && message.length > 500) {
+      this.showToastMessage('Message must be under 500 characters.');
+      return false;
+    }
+
+    return true;
+  }
+
+  // ================= WHATSAPP =================
+  sendToWhatsApp() {
+    if (!this.validateForm()) return;
 
     const messageText = `Hello Nexus Solutions,\n\nI would like to make an inquiry:\n\n*Name:* ${this.contactForm.name}\n*Mobile:* ${this.contactForm.mobile}\n*Email:* ${this.contactForm.email}\n*Service:* ${this.contactForm.service}\n*Message:* ${this.contactForm.message}`;
     const encodedText = encodeURIComponent(messageText);
@@ -72,21 +107,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ================= EMAIL (Send Directly) =================
   sendEmail() {
-    if (this.toastTimeout) {
-      clearTimeout(this.toastTimeout);
-      this.toastTimeout = null;
-    }
-
-    // Validation
-    if (!this.contactForm.name || !this.contactForm.message) {
-      this.toastMessage = 'Please fill in your name and message.';
-      this.showToast = true;
-      this.toastTimeout = setTimeout(() => {
-        this.showToast = false;
-        this.toastTimeout = null;
-      }, 3500);
-      return;
-    }
+    if (!this.validateForm()) return;
 
     const subject = encodeURIComponent(`Inquiry from ${this.contactForm.name}`);
     const body = encodeURIComponent(
@@ -109,6 +130,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // ================= HERO SLIDER =================
+  // ... (unchanged, keep your existing code)
   heroSlides: HeroSlide[] = [
     { image: 'assets/warehouse1.png', label: 'Solar & Lightning Protection' },
     { image: 'assets/manInstallingArrester.png', label: 'Industrial Power Infrastructure' },
@@ -151,7 +173,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.years < 5) this.years++;
       if (this.customers < 500) this.customers += 100;
       if (this.projects < 20) this.projects += 5;
-
       if (this.years >= 5 && this.customers >= 500 && this.projects >= 20) {
         clearInterval(interval);
       }
@@ -183,7 +204,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.startCounter();
 
-    // Populate dropdown from PRODUCTS (categories)
     const categories = new Set(PRODUCTS.map(p => p.category));
     this.serviceOptions = [
       'All Products',
@@ -194,17 +214,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.contactForm.service = this.serviceOptions[0];
     }
 
-    // Listen for fragment and query param to focus the contact form
     this.route.fragment.subscribe(fragment => {
-      if (fragment === 'contact') {
-        this.focusContactForm();
-      }
+      if (fragment === 'contact') this.focusContactForm();
     });
-
     this.route.queryParams.subscribe(params => {
-      if (params['focus'] === 'name') {
-        this.focusContactForm();
-      }
+      if (params['focus'] === 'name') this.focusContactForm();
     });
   }
 
@@ -218,13 +232,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.heroTimer);
     clearTimeout(this.labelTimer);
-    if (this.toastTimeout) {
-      clearTimeout(this.toastTimeout);
-    }
+    if (this.toastTimeout) clearTimeout(this.toastTimeout);
   }
 
   private focusContactForm(): void {
-    // Wait a moment for the DOM to settle after navigation
     setTimeout(() => {
       if (this.nameInput) {
         this.nameInput.nativeElement.focus();
@@ -233,7 +244,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 300);
   }
 
-  // ================= PRODUCT MODAL (Featured Products) =================
+  // ================= PRODUCT MODAL =================
   selectedProduct: FeaturedProduct | null = null;
 
   productDetails: { [key: string]: FeaturedProduct } = {
