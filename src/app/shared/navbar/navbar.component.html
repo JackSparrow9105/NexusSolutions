@@ -1,0 +1,68 @@
+<nav class="navbar" [class.scrolled]="isScrolled">
+  
+  <!-- Logo always col 1 -->
+  <a routerLink="/" class="logo">
+    <img src="assets/CaptureLogo.PNG" alt="Nexus Solutions" height="48" class="logo-image">
+  </a>
+
+  <!-- Center nav links (desktop only) -->
+  <ul class="nav-links" [class.active]="menuOpen">
+    <li><a routerLink="/" (click)="toggleMenu(true)">Home</a></li>
+
+    <li class="dropdown"
+        (mouseenter)="openDropdown('company')"
+        (mouseleave)="closeDropdown()"
+        (click)="toggleDropdown('company', $event)">
+      <a>Company <small [class.rotate]="activeDropdown === 'company'">▾</small></a>
+      <ul class="dropdown-menu" *ngIf="activeDropdown === 'company'">
+        <li><a [routerLink]="['/']" fragment="about" (click)="toggleMenu(true)">About Us</a></li>
+        <li><a routerLink="/mission" (click)="toggleMenu(true)">Mission & Vision</a></li>
+        <li><a routerLink="/leadership" (click)="toggleMenu(true)">Leadership</a></li>
+        <li><a routerLink="/certifications" (click)="toggleMenu(true)">Certifications</a></li>
+      </ul>
+    </li>
+
+    <li class="dropdown"
+        (mouseenter)="openDropdown('products')"
+        (mouseleave)="closeDropdown()"
+        (click)="toggleDropdown('products', $event)">
+      <a>Products <small [class.rotate]="activeDropdown === 'products'">▾</small></a>
+      <ul class="dropdown-menu" *ngIf="activeDropdown === 'products'">
+        <li *ngFor="let item of productsMenu">
+          <a [routerLink]="['/products']" [fragment]="item.id" (click)="toggleMenu(true); activeDropdown = null">{{ item.title }}</a>
+        </li>
+      </ul>
+    </li>
+
+    <li><a routerLink="/projects" (click)="toggleMenu(true)">Projects</a></li>
+    <li><a routerLink="/contact" (click)="toggleMenu(true)">Contact</a></li>
+  </ul>
+
+  <!-- Desktop right section -->
+  <div class="desktop-contact-section">
+    <a href="tel:+918905302210" class="phone-link">
+      <span class="phone-icon">📞</span>
+      <span>+91 8905302210</span>
+    </a>
+    <button class="brochure-btn" (click)="downloadBrochure()">
+      <span class="pdf-icon">📄</span>
+      Download Brochure
+    </button>
+  </div>
+
+  <!-- Mobile right section: call + download + hamburger -->
+  <div class="mobile-actions">
+    <a href="tel:+918905302210" class="mobile-phone-link">
+      <span class="phone-icon">📞</span>
+      <span class="phone-number">+91 8905302210</span>
+    </a>
+    <button class="mobile-brochure-btn" (click)="downloadBrochure()">
+      <span class="pdf-icon">📄</span>
+      <span class="btn-text">Brochure</span>
+    </button>
+    <button class="hamburger" (click)="toggleMenu()">
+      <span [innerHTML]="menuOpen ? '✕' : '☰'"></span>
+    </button>
+  </div>
+
+</nav>

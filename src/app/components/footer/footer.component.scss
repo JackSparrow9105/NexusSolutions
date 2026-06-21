@@ -1,0 +1,90 @@
+.footer {
+  background: #0F172A;
+  color: #E2E8F0;
+  padding: 80px 20px 30px;
+  border-top: 1px solid #1E293B; // Separates the footer from the contact section
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .footer-col {
+    h4 {
+      margin-bottom: 25px;
+      color: white;
+      font-size: 1.2rem;
+      position: relative;
+      
+      // Decorative orange underline
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 2px;
+        background: #f97316; 
+      }
+    }
+    
+    p {
+      line-height: 1.6;
+      font-size: 0.95rem;
+      color: #94A3B8;
+    }
+  }
+
+  .logo {
+    color: #f97316; // Swapped from Green to your Brand Orange
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 12px;
+
+      a {
+        text-decoration: none;
+        color: #CBD5E1;
+        transition: 0.3s ease;
+
+        &:hover {
+          color: #f97316; // Brand Orange
+          padding-left: 5px; // Subtle interaction
+        }
+      }
+    }
+  }
+
+  .social-icons span {
+    font-size: 20px;
+    margin-right: 15px;
+    color: #CBD5E1;
+    transition: 0.3s;
+
+    &:hover {
+      color: #f97316;
+      transform: translateY(-3px);
+      display: inline-block;
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 60px;
+    border-top: 1px solid #1E293B;
+    padding-top: 25px;
+    font-size: 14px;
+    color: #64748B;
+    letter-spacing: 0.5px;
+  }
+}

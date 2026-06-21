@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="52" viewBox="0 0 260 52">
+  <title>Nexus Solutions</title>
+  <style>
+    .ws-name { font-family: 'Inter', Arial, sans-serif; font-size: 18px; font-weight: 800; fill: #0f172a; letter-spacing: -0.3px; }
+    .ws-tag  { font-family: 'Inter', Arial, sans-serif; font-size: 7.5px; font-weight: 600; fill: #94a3b8; letter-spacing: 2.5px; }
+  </style>
+
+  <!-- Hexagon mark, centred at 26,26 -->
+  <g transform="translate(26,26)">
+    <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="#f97316"/>
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="#ea580c"/>
+    <line x1="-6" y1="-9" x2="-6" y2="9" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+    <line x1="6"  y1="-9" x2="6"  y2="9" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+    <line x1="-6" y1="-9" x2="6"  y2="9" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- Divider -->
+  <line x1="54" y1="8" x2="54" y2="44" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Wordmark -->
+  <text x="63" y="28" class="ws-name">Nexus <tspan fill="#f97316">Solutions</tspan></text>
+
+  <!-- Tagline -->
+  <text x="64" y="41" class="ws-tag">POWER · SAFETY · COMPLIANCE</text>
+</svg>

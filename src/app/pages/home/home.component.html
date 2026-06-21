@@ -1,0 +1,517 @@
+<section class="hero-new">
+
+  <!-- BACKGROUND SLIDES -->
+  <div class="slides-wrap">
+    <div
+      class="slide"
+      *ngFor="let slide of heroSlides; let i = index"
+      [class.active]="i === heroSlide"
+      [style.background-image]="'url(' + slide.image + ')'">
+    </div>
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- SLIDE LABEL (bottom-right, fades in/out) -->
+  <div class="slide-label" [class.visible]="slideLabelVisible">
+    {{ heroSlides[heroSlide].label }}
+  </div>
+
+  <!-- SLIDE INDICATORS (right side dots) -->
+  <div class="slide-indicators">
+    <button
+      class="dot"
+      *ngFor="let slide of heroSlides; let i = index"
+      [class.active]="i === heroSlide"
+      (click)="goToSlide(i)">
+    </button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="hero-container">
+    <div class="hero-left" data-aos="fade-right">
+
+      <!-- <span class="badge">Your Safety, Our Priority</span> -->
+
+      <h1>
+        Industrial-Grade<br>
+        <span>Protection</span> for<br>
+        Critical Infrastructure
+      </h1>
+
+      <p>
+        Advanced Earthing, Lightning Protection and Solar BOS solutions
+        engineered for long-term safety and compliance.
+      </p>
+
+    <div class="hero-buttons">
+  <a [routerLink]="['/products']" class="btn-primary">Explore Products</a>
+  <!-- Replaced PDF download with a scroll & focus action -->
+  <a (click)="nameInput.focus(); nameInput.scrollIntoView({behavior: 'smooth', block: 'center'})" 
+     class="btn-secondary" 
+     style="cursor: pointer;">
+    Request Quotation
+  </a>
+</div>
+    </div>
+  </div>
+
+  <!-- STATS BAR (pinned to bottom) -->
+  <div class="stats-bar" data-aos="fade-up">
+    <div class="stat">
+      <h3>5+</h3>
+      <p>Years Experience</p>
+    </div>
+    <div class="stat">
+      <h3>500+</h3>
+      <p>Happy Customers</p>
+    </div>
+    <div class="stat">
+      <h3>20+</h3>
+      <p>Projects Completed</p>
+    </div>
+    <div class="stat">
+      <h3>24/7</h3>
+      <p>Customer Support</p>
+    </div>
+  </div>
+
+</section>
+
+
+<section id="about" class="about">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="about-header" data-aos="fade-up">
+      <span class="about-tag">About Nexus Solutions</span>
+      <h2>Built on a Foundation of Safety &amp; Trust</h2>
+      <p>
+        Nexus Solutions is a Chennai-based specialist in industrial-grade earthing systems,
+        lightning protection, and solar BOS components — delivering compliance-driven solutions
+        to critical infrastructure across India.
+      </p>
+    </div>
+
+    <!-- MISSION / VISION -->
+    <div class="mv-grid" data-aos="fade-up">
+      <div class="mv-card mv-mission">
+        <span class="mv-label">Our Mission</span>
+        <h3>Protecting What Matters Most</h3>
+        <p>To deliver world-class earthing and lightning protection solutions that safeguard
+          lives, assets, and infrastructure — engineered for reliability and built to last.</p>
+      </div>
+      <div class="mv-card mv-vision">
+        <span class="mv-label mv-label--muted">Our Vision</span>
+        <h3>India's Most Trusted Safety Partner</h3>
+        <p>To be the first-choice partner for electrical safety and solar BOS solutions across
+          industrial, commercial, and renewable energy sectors in India.</p>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <p class="section-sublabel">Our Journey</p>
+    <div class="timeline" data-aos="fade-up">
+
+      <div class="tl-item">
+        <div class="tl-dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white" viewBox="0 0 24 24">
+            <path d="M4 4h16v2l-8 8-8-8V4z"/>
+          </svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-year">Founded</span>
+          <h4>Company Established in Chennai</h4>
+          <p>Nexus Solutions was founded with a clear purpose — to bridge the gap between international
+            safety standards and on-ground electrical infrastructure in India. We began with earthing
+            and grounding solutions for industrial clients across Tamil Nadu.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white" viewBox="0 0 24 24">
+            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
+          </svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-year">Expansion</span>
+          <h4>Lightning Protection Division Launched</h4>
+          <p>Responding to rising demand from telecom towers, warehouses, and manufacturing facilities,
+            we expanded into ESE lightning arresters and surge protection devices — backed by
+            high-voltage laboratory testing and IS/IEC compliance.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="2"/><rect x="3" y="6" width="18" height="2"/>
+            <path d="M5 18h14v2H5z"/>
+          </svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-year">Solar BOS</span>
+          <h4>Solar Balance of System Portfolio Added</h4>
+          <p>With India's solar sector accelerating, Nexus Solutions introduced a complete Solar BOS
+            range — ACDB/DCDB panels, earthing kits, TUV-certified DC cables, and IP65 weatherproof
+            enclosures — serving residential and utility-scale projects.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-year">Today</span>
+          <h4>500+ Projects. Pan-India Presence.</h4>
+          <p>Today, Nexus Solutions serves 500+ customers across infrastructure, renewable energy,
+            and industrial sectors. Every solution is engineered to global standards — IEEE 80,
+            IS 3043, IEC 62305 — and backed by 24/7 dedicated support.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="about-divider"></div>
+
+    <!-- VALUES -->
+    <p class="section-sublabel">Why We're Different</p>
+    <div class="values-grid" data-aos="fade-up">
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#f97316" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+          </svg>
+        </div>
+        <h4>Global Compliance</h4>
+        <p>Every product meets IEEE 80, IS 3043, IEC 62305, and TUV standards — no shortcuts, no compromises.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#f97316" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <h4>End-to-End Safety</h4>
+        <p>From site assessment and product selection to installation support — we cover the full protection lifecycle.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#f97316" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <h4>Engineering-First</h4>
+        <p>Our team brings deep technical expertise to every project — no generic off-the-shelf recommendations.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="products" id="products" data-aos="fade-up">
+  <div class="container">
+    <div class="section-header">
+       <h2>Our Key Products</h2>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card" id="earthing">
+        <div class="product-image-wrapper">
+          <img src="assets/Products/gi-earthing-electrode.jpg" alt="Earthing Systems">
+        </div>
+        <div class="product-card-content">
+          <h3>Earthing Systems</h3>
+          <ul>
+            <li>Chemical Earthing</li>
+            <li>GI Earthing</li>
+            <li>Copper Bonded Electrodes</li>
+            <!-- <li>Earthing Pit Covers</li> -->
+          </ul>
+          
+        <div class="card-actions single-action">
+  <button (click)="openModal('earthing')" class="btn-view-more">
+    <span>View More Details</span>
+    <div class="icon-circle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+      </svg>
+    </div>
+  </button>
+</div>
+    
+        </div>
+        
+      </div>
+
+      <div class="product-card" id="lightning">
+        <div class="product-image-wrapper">
+          <img src="assets/Products/arrester.jpg" alt="Lightning Arresters">
+        </div>
+        <div class="product-card-content">
+          <h3>Lightning Arresters</h3>
+          <ul>
+            <li>ESE Lightning Arresters</li>
+            <li>Conventional Lightning Rods</li>
+            <li>Surge Protection Devices</li>
+          </ul>
+           <div class="card-actions single-action">
+  <button (click)="openModal('lightning')" class="btn-view-more">
+    <span>View More Details</span>
+    <div class="icon-circle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+      </svg>
+    </div>
+  </button>
+</div>
+        </div>
+      </div>
+
+      <div class="product-card" id="solar">
+        <div class="product-image-wrapper">
+          <img src="assets/Products/BOS.png" alt="Solar BOS">
+        </div>
+        <div class="product-card-content">
+          <h3>Solar BOS Components</h3>
+          <ul>
+            <li>ACDB / DCDB</li>
+            <li>Earthing Kits for Solar</li>
+            <!-- <li>Mounting Accessories</li> -->
+          </ul>
+            <div class="card-actions single-action">
+  <button (click)="openModal('solar')" class="btn-view-more">
+    <span>View More Details</span>
+    <div class="icon-circle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+      </svg>
+    </div>
+  </button>
+</div>
+        </div>
+      </div>
+
+      <div class="product-card" id="cables">
+        <div class="product-image-wrapper">
+          <img src="assets/Products/dcCable.jpg" alt="DC Cable">
+        </div>
+        <div class="product-card-content">
+          <h3>DC Cable</h3>
+          <ul>
+            <li>Solar DC Cables</li>
+            <li>UV Resistant</li>
+            <li>Pure Copper Conductors</li>
+          </ul>
+           <div class="card-actions single-action">
+  <button (click)="openModal('cables')" class="btn-view-more">
+    <span>View More Details</span>
+    <div class="icon-circle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+      </svg>
+    </div>
+  </button>
+</div>
+        </div>
+      </div>
+    </div>
+    <div class="view-all-wrapper">
+      <a routerLink="/products" class="btn-secondary">View Full Product List</a>
+    </div>
+
+  </div>
+<div class="modal-overlay"
+     *ngIf="selectedProduct as product"
+     (click)="closeModal()">
+
+  <div class="modal-content"
+       (click)="$event.stopPropagation()">
+
+    <button class="close-btn"
+            (click)="closeModal()">✕</button>
+
+    <div class="modal-grid">
+
+      <!-- LEFT IMAGE -->
+      <div class="modal-visual">
+        <img [src]="product.image"
+             [alt]="product.title">
+      </div>
+
+      <!-- RIGHT DETAILS -->
+      <div class="modal-details">
+
+        <span class="category-tag">Pro Ground Certified</span>
+
+        <h2>{{ product.title }}</h2>
+
+        <p class="description">
+          {{ product.description }}
+        </p>
+
+        <div class="specs-section">
+          <h3>Technical Specifications</h3>
+
+          <div class="spec-row"
+               *ngFor="let spec of product.specs">
+            <span class="spec-label">
+              {{ spec.label }}
+            </span>
+            <span class="spec-value">
+              {{ spec.value }}
+            </span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+        <a href="#contact"
+   (click)="closeModal()"
+   class="btn-primary">
+   Enquire for Installation
+</a>
+          <button class="btn-close-bottom"
+                  (click)="closeModal()">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<section class="why-us">
+  <div class="container">
+    <h2>Why Choose Us</h2>
+    <p class="subtitle">Delivering reliable solar solutions with quality and trust.</p>
+    <div class="why-us-grid">
+      <div class="why-us-card">
+        <h4>Trusted Safety Partner</h4>
+        <p>Industry-grade earthing and lightning protection solutions built to international standards.</p>
+      </div>
+      <div class="why-us-card">
+        <h4>End-to-End Support</h4>
+        <p>From site assessment to installation and aftersales, we support your project lifecycle.</p>
+      </div>
+      <div class="why-us-card">
+        <h4>Strong Pan-India Reach</h4>
+        <p>Serving infrastructure, solar, and industrial clients across the country with fast delivery.</p>
+      </div>
+      <div class="why-us-card">
+        <h4>24/7 Customer Care</h4>
+        <p>Dedicated support whenever you need it, without repeating the hero metrics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <span class="badge-light">Testimonials</span>
+    <h2>Trusted by Industry Leaders</h2>
+    
+    <div class="testimonial-container">
+      <div class="testimonial-slider">
+        <div class="testimonial-card" *ngFor="let t of testimonials; let i = index" [class.active]="i === currentSlide">
+          <div class="quote-icon">“</div>
+          <div class="stars">★★★★★</div>
+          <p class="message">{{ t.message }}</p>
+          <div class="client-meta">
+            <h4>{{ t.name }}</h4>
+            <span>{{ t.location }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-dots">
+        <span *ngFor="let t of testimonials; let i = index" 
+              [class.active]="i === currentSlide" 
+              (click)="currentSlide = i"></span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="container contact-wrapper">
+    <div class="contact-info">
+      <span class="badge">Get in Touch</span>
+      <h2>Let’s Secure Your Infrastructure</h2>
+      <p>Whether you need a full lightning protection audit or specific earthing components, our team in Lucknow is ready to assist.</p>
+      
+      <div class="contact-details">
+       <div class="detail-item">
+          <span class="icon">📍</span>
+          <div>
+            <h4>Registered Office</h4>
+            <p>
+              Plot No.153 Thirumalai Nagar, Pullilion village,<br>
+              Adaperumbakkam, Chettimedu,<br>
+              Madhavaram, chennai - 600060
+            </p>
+            <a href="https://maps.google.com/maps?q=13.177360534667969%2C80.22132873535156&z=17&hl=hi" 
+              target="_blank" 
+              class="map-link">
+              View on Google Maps →
+            </a>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="icon">📞</span>
+          <div>
+            <h4>Call Us</h4>
+            <p>+91 8905302210</p>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="icon">📧</span>
+          <div>
+            <h4>Email</h4>
+           <p>sales&#64;mynexussolutions.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="contact-form-card">
+      <form (ngSubmit)="sendToWhatsApp()">
+  <div class="form-group">
+  <label>Full Name</label>
+  <!-- Added #nameInput here -->
+  <input #nameInput type="text" name="name" [(ngModel)]="contactForm.name" placeholder="Enter your name" required>
+</div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" [(ngModel)]="contactForm.email" placeholder="email@company.com">
+        </div>
+        
+        <div class="form-group">
+          <label>Service Required</label>
+          <select name="service" [(ngModel)]="contactForm.service">
+            <option value="Earthing Systems">Earthing Systems</option>
+            <option value="Lightning Protection">Lightning Protection</option>
+            <option value="Solar BOS Components">Solar BOS Components</option>
+            <option value="Other / General Inquiry">Other / General Inquiry</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Message</label>
+          <textarea rows="4" name="message" [(ngModel)]="contactForm.message" placeholder="Tell us about your project requirements" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-primary full-width">Send Message via WhatsApp</button>
+      
+      </form>
+    </div>
+    
+  </div>
+</section>

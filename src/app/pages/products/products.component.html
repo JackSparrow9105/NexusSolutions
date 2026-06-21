@@ -1,0 +1,61 @@
+<section class="products-page">
+  <div class="container">
+    <div class="page-header">
+      <span class="badge-light">Products</span>
+      <h1>Explore All Products</h1>
+      <p>Browse our complete product catalog with earthing systems, lightning protection, solar BOS, cables, and accessories.</p>
+    </div>
+
+    <div class="product-grid">
+      <article [id]="product.id" class="product-card" *ngFor="let product of products">
+        <div class="product-image-wrapper">
+          <img [src]="product.image" [alt]="product.title" />
+        </div>
+        <div class="product-card-content">
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.description }}</p>
+          <ul>
+            <li *ngFor="let feature of product.features">{{ feature }}</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a href="#" (click)="openWhatsAppForProduct(product); $event.preventDefault()" class="btn-primary"> Enquire for Installation</a>
+          <button class="btn-secondary" (click)="openModal(product)">View Full Details</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="contact-note">
+      <p>Want help choosing the right product? Click <a href="#" (click)="openWhatsAppForProduct(); $event.preventDefault()">Order Now</a> to request a quote.</p>
+    </div>
+
+   
+  </div>
+
+   <div class="modal-overlay" *ngIf="selectedProduct as product" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeModal()">✕</button>
+        <div class="modal-grid">
+          <div class="modal-visual">
+            <img [src]="product.image" [alt]="product.title" />
+          </div>
+          <div class="modal-details">
+            <span class="category-tag">Product Details</span>
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.description }}</p>
+            <div class="specs-section">
+              <h3>Key Specifications</h3>
+              <div class="spec-row" *ngFor="let spec of product.specs">
+                <span class="spec-label">{{ spec.label }}</span>
+                <span class="spec-value">{{ spec.value }}</span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" (click)="openWhatsAppForProduct(product); $event.preventDefault()" class="btn-primary">Order Now</a>
+              <button class="btn-close-bottom" (click)="closeModal()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
