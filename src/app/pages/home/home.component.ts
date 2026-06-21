@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const encodedText = encodeURIComponent(messageText);
 
     // 3. Your target WhatsApp Number
-    const phoneNumber = '919161495113';
+    const phoneNumber = '918905302210';
 
     // 4. Construct the final URL and open it
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
