@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 680 200">
+  <title>Nexus Solutions — horizontal logo</title>
+  <style>
+    .ws-name { font-family: 'Inter', Arial, sans-serif; font-size: 32px; font-weight: 800; fill: #0f172a; letter-spacing: -0.5px; }
+    .ws-tag  { font-family: 'Inter', Arial, sans-serif; font-size: 14px; font-weight: 500; fill: #f97316; letter-spacing: 3px; }
+  </style>
+  <g transform="translate(160, 100)">
+    <polygon points="0,-52 45,-26 45,26 0,52 -45,26 -45,-26" fill="#f97316"/>
+    <polygon points="0,-36 31,-18 31,18 0,36 -31,18 -31,-18" fill="#ea580c"/>
+    <line x1="-14" y1="-20" x2="-14" y2="20" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="14"  y1="-20" x2="14"  y2="20" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="-14" y1="-20" x2="14"  y2="20" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+  <line x1="227" y1="62" x2="227" y2="138" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="246" y="113" class="ws-name">Nexus <tspan fill="#f97316">Solutions</tspan></text>
+  <text x="248" y="140" class="ws-tag">POWER · SAFETY · COMPLIANCE</text>
+</svg>
