@@ -1,14 +1,11 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // <--- IMPORT ADDED HERE
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { PRODUCTS, ProductSpec } from '../../shared/product-data';
 
-interface ProductSpec {
-  label: string;
-  value: string;
-}
-
-interface Product {
+// Local interface for the featured products (modal)
+interface FeaturedProduct {
   title: string;
   image: string;
   description: string;
@@ -23,39 +20,61 @@ interface HeroSlide {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule], // <--- ADDED FormsModule HERE
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // ================= CONTACT FORM TO WHATSAPP =================
+  // Reference to the name input in the contact form
+  @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>;
+
+  // ================= CONTACT FORM =================
   contactForm = {
     name: '',
     email: '',
-    service: 'Earthing Systems', // Default selection
+    service: '',
     message: ''
   };
 
+  serviceOptions: string[] = [];
+  toastMessage: string = '';
+  showToast: boolean = false;
+  private toastTimeout: any;
+
+  constructor(private route: ActivatedRoute) {}
+
+  // ================= WHATSAPP =================
   sendToWhatsApp() {
-    // Check if essential fields are filled (basic validation)
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+
+    // Validation
     if (!this.contactForm.name || !this.contactForm.message) {
-      alert("Please fill in your name and message.");
+      this.toastMessage = 'Please fill in your name and message.';
+      this.showToast = true;
+      this.toastTimeout = setTimeout(() => {
+        this.showToast = false;
+        this.toastTimeout = null;
+      }, 3500);
       return;
     }
 
-    // 1. Format the message exactly how it will appear in WhatsApp
     const messageText = `Hello Nexus Solutions,\n\nI would like to make an inquiry:\n\n*Name:* ${this.contactForm.name}\n*Email:* ${this.contactForm.email}\n*Service:* ${this.contactForm.service}\n*Message:* ${this.contactForm.message}`;
-
-    // 2. Encode the text so it works safely in a URL
     const encodedText = encodeURIComponent(messageText);
-
-    // 3. Your target WhatsApp Number
     const phoneNumber = '918905302210';
-
-    // 4. Construct the final URL and open it
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
     window.open(whatsappUrl, '_blank');
+  }
+
+  closeToast(): void {
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+    this.showToast = false;
   }
 
   // ================= HERO SLIDER =================
@@ -96,10 +115,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   customers = 0;
   projects = 0;
 
-  ngOnInit(): void {
-    this.startCounter();
-  }
-
   startCounter(): void {
     const interval = setInterval(() => {
       if (this.years < 5) this.years++;
@@ -133,9 +148,37 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   currentSlide = 0;
 
+  // ================= LIFECYCLE HOOKS =================
+  ngOnInit(): void {
+    this.startCounter();
+
+    // Populate dropdown from PRODUCTS (categories)
+    const categories = new Set(PRODUCTS.map(p => p.category));
+    this.serviceOptions = [
+      'All Products',
+      ...Array.from(categories).sort(),
+      'Other / General Inquiry'
+    ];
+    if (this.serviceOptions.length) {
+      this.contactForm.service = this.serviceOptions[0];
+    }
+
+    // Listen for fragment and query param to focus the contact form
+    this.route.fragment.subscribe(fragment => {
+      if (fragment === 'contact') {
+        this.focusContactForm();
+      }
+    });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['focus'] === 'name') {
+        this.focusContactForm();
+      }
+    });
+  }
+
   ngAfterViewInit(): void {
     this.startHeroTimer();
-
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % this.testimonials.length;
     }, 4000);
@@ -144,12 +187,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.heroTimer);
     clearTimeout(this.labelTimer);
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+    }
   }
 
-  // ================= PRODUCTS =================
-  selectedProduct: Product | null = null;
+  private focusContactForm(): void {
+    // Wait a moment for the DOM to settle after navigation
+    setTimeout(() => {
+      if (this.nameInput) {
+        this.nameInput.nativeElement.focus();
+        this.nameInput.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 300);
+  }
 
-  productDetails: { [key: string]: Product } = {
+  // ================= PRODUCT MODAL (Featured Products) =================
+  selectedProduct: FeaturedProduct | null = null;
+
+  productDetails: { [key: string]: FeaturedProduct } = {
     earthing: {
       title: 'Earthing Systems',
       image: 'assets/Products/gi-earthing-electrode.jpg',

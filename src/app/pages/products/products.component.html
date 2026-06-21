@@ -19,14 +19,14 @@
           </ul>
         </div>
         <div class="card-actions">
-          <a href="#" (click)="openWhatsAppForProduct(product); $event.preventDefault()" class="btn-primary"> Enquire for Installation</a>
+          <a href="#" (click)="goToContactForm(product); $event.preventDefault()" class="btn-primary"> Enquire for Installation</a>
           <button class="btn-secondary" (click)="openModal(product)">View Full Details</button>
         </div>
       </article>
     </div>
 
     <div class="contact-note">
-      <p>Want help choosing the right product? Click <a href="#" (click)="openWhatsAppForProduct(); $event.preventDefault()">Order Now</a> to request a quote.</p>
+      <p>Want help choosing the right product? Click <a href="#" (click)="goToContactForm(); $event.preventDefault()">Order Now</a> to request a quote.</p>
     </div>
 
    
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <a href="#" (click)="openWhatsAppForProduct(product); $event.preventDefault()" class="btn-primary">Order Now</a>
+              <a href="#" (click)="goToContactForm(product); $event.preventDefault()" class="btn-primary">Order Now</a>
               <button class="btn-close-bottom" (click)="closeModal()">Close</button>
             </div>
           </div>

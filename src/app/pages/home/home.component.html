@@ -495,12 +495,12 @@
         
         <div class="form-group">
           <label>Service Required</label>
-          <select name="service" [(ngModel)]="contactForm.service">
-            <option value="Earthing Systems">Earthing Systems</option>
-            <option value="Lightning Protection">Lightning Protection</option>
-            <option value="Solar BOS Components">Solar BOS Components</option>
-            <option value="Other / General Inquiry">Other / General Inquiry</option>
-          </select>
+        <select name="service" [(ngModel)]="contactForm.service">
+  <option *ngFor="let opt of serviceOptions" [value]="opt">
+    {{ opt }}
+  </option>
+  
+</select>
         </div>
         
         <div class="form-group">
@@ -513,5 +513,12 @@
       </form>
     </div>
     
+  </div>
+    <div class="toast-container" [class.show]="showToast">
+    <div class="toast-content">
+      <span class="toast-icon">⚠️</span>
+      <span class="toast-message">{{ toastMessage }}</span>
+      <button class="toast-close" (click)="closeToast()">✕</button>
+    </div>
   </div>
 </section>
