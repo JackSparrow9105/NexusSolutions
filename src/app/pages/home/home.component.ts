@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   contactForm = {
     name: '',
     email: '',
+    mobile: '',        // <-- NEW field
     service: '',
     message: ''
   };
@@ -62,11 +63,41 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    const messageText = `Hello Nexus Solutions,\n\nI would like to make an inquiry:\n\n*Name:* ${this.contactForm.name}\n*Email:* ${this.contactForm.email}\n*Service:* ${this.contactForm.service}\n*Message:* ${this.contactForm.message}`;
+    const messageText = `Hello Nexus Solutions,\n\nI would like to make an inquiry:\n\n*Name:* ${this.contactForm.name}\n*Mobile:* ${this.contactForm.mobile}\n*Email:* ${this.contactForm.email}\n*Service:* ${this.contactForm.service}\n*Message:* ${this.contactForm.message}`;
     const encodedText = encodeURIComponent(messageText);
     const phoneNumber = '918905302210';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
     window.open(whatsappUrl, '_blank');
+  }
+
+  // ================= EMAIL (Send Directly) =================
+  sendEmail() {
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+
+    // Validation
+    if (!this.contactForm.name || !this.contactForm.message) {
+      this.toastMessage = 'Please fill in your name and message.';
+      this.showToast = true;
+      this.toastTimeout = setTimeout(() => {
+        this.showToast = false;
+        this.toastTimeout = null;
+      }, 3500);
+      return;
+    }
+
+    const subject = encodeURIComponent(`Inquiry from ${this.contactForm.name}`);
+    const body = encodeURIComponent(
+      `Name: ${this.contactForm.name}\n` +
+      `Mobile: ${this.contactForm.mobile}\n` +
+      `Email: ${this.contactForm.email}\n` +
+      `Service: ${this.contactForm.service}\n\n` +
+      `Message:\n${this.contactForm.message}`
+    );
+    const mailtoLink = `mailto:sales@mynexussolutions.com?subject=${subject}&body=${body}`;
+    window.open(mailtoLink, '_blank');
   }
 
   closeToast(): void {

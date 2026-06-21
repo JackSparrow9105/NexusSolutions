@@ -1321,3 +1321,71 @@ body {
 .toast-close:hover {
   color: #f8fafc;
 }
+
+
+/* ============================================================
+   BUTTON GROUP (Contact Form)
+   ============================================================ */
+.button-group {
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+.btn-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+  background: transparent;
+  color: white;
+  min-width: 0;  /* prevent overflow */
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* WhatsApp button */
+  &.btn-whatsapp {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+    }
+  }
+
+  /* Email button */
+  &.btn-email {
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    color: #f8fafc;
+
+    &:hover {
+      border-color: #f97316;
+      background: rgba(249, 115, 22, 0.1);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
