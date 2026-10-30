@@ -4,5 +4,7 @@ import { ProductsComponent } from './pages/products/products.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products', component: ProductsComponent }
+  { path: 'products', component: ProductsComponent },
+  // Any unknown URL (old links, typos) goes back to the home page instead of crashing the router
+  { path: '**', redirectTo: '' }
 ];

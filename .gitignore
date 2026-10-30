@@ -27,3 +27,5 @@
 *.njsproj
 *.sln
 *.swp
+
+.wrangler/

@@ -190,6 +190,8 @@ body {
 
 .btn-secondary {
   background: transparent;
+  font-family: inherit;
+  cursor: pointer;
   color: white;
   padding: 13px 28px;
   border-radius: 8px;
@@ -908,6 +910,9 @@ body {
   .btn-primary {
     background: #0f172a;
     color: white;
+    border: none;
+    font-family: inherit;
+    font-size: 15px;
   }
 
   .btn-close-bottom {
@@ -1069,9 +1074,11 @@ body {
   justify-content: center;
   gap: 10px;
 
-  span {
+  button {
     width: 10px;
     height: 10px;
+    padding: 0;
+    border: none;
     border-radius: 50%;
     background: #cbd5e1;
     cursor: pointer;
@@ -1114,8 +1121,8 @@ body {
 
 /* --- Contact Info --- */
 .contact-info {
-  flex: 1;
-  min-width: 350px;
+  flex: 1 1 350px;
+  min-width: 0;
 
   .badge {
     background: rgba(249, 115, 22, 0.2);
@@ -1173,6 +1180,14 @@ body {
   p {
     margin: 0;
     font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  p a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { color: #f97316; }
   }
 }
 
@@ -1194,8 +1209,9 @@ body {
 
 /* --- Contact Form Card --- */
 .contact-form-card {
-  flex: 1;
-  min-width: 350px;
+  flex: 1 1 350px;
+  min-width: 0;
+  width: 100%;
   background: #1e293b;
   padding: 40px;
   border-radius: 20px;
@@ -1229,6 +1245,7 @@ body {
   }
 
   input:focus,
+  select:focus,
   textarea:focus {
     outline: none;
     border-color: #f97316;
@@ -1284,6 +1301,10 @@ body {
   max-width: 90%;
   min-width: 280px;
   pointer-events: none; /* prevents interaction while hidden */
+}
+
+.toast-container.success {
+  border-left-color: #22c55e;
 }
 
 .toast-container.show {
@@ -1388,5 +1409,125 @@ body {
 
   &:active {
     transform: scale(0.97);
+  }
+}
+
+/* ============================================================
+   FORM HELPERS (errors, +91 prefix, counters)
+   ============================================================ */
+.form-group {
+  .optional {
+    color: #64748b;
+    font-size: 12px;
+  }
+
+  .field-error {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #fca5a5;
+  }
+
+  .char-count {
+    display: block;
+    text-align: right;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  &.has-error input,
+  &.has-error textarea,
+  &.has-error .input-prefix {
+    border-color: #ef4444;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.input-prefix {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #0f172a;
+  overflow: hidden;
+  transition: 0.3s;
+
+  span {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    color: #94a3b8;
+    font-size: 15px;
+    border-right: 1px solid #334155;
+  }
+
+  &:focus-within {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+  }
+
+  .form-group & input {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    min-width: 0;
+  }
+}
+
+/* ============================================================
+   MOBILE FIXES
+   ============================================================ */
+@media (max-width: 600px) {
+  .contact {
+    padding: 64px 0;
+  }
+
+  .contact-wrapper {
+    gap: 40px;
+  }
+
+  .contact-info h2 {
+    font-size: 28px;
+  }
+
+  .contact-form-card {
+    padding: 24px 18px;
+  }
+
+  .about-header h2,
+  .why-us h2,
+  .testimonials h2 {
+    font-size: 26px;
+  }
+
+  .testimonial-card {
+    padding: 48px 22px 32px;
+
+    .message { font-size: 1.05rem; }
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .modal-visual,
+  .modal-details {
+    padding: 24px;
+  }
+
+  .modal-details h2 {
+    font-size: 22px;
+  }
+
+  // keep the toast clear of the floating WhatsApp / AI buttons
+  .toast-container {
+    bottom: 90px;
+    min-width: 0;
+    width: calc(100% - 32px);
   }
 }

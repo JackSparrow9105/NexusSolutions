@@ -51,6 +51,20 @@
 
       &:hover { color: #f97316; }
     }
+
+    .dropdown-toggle {
+      background: none;
+      border: none;
+      font: inherit;
+      color: #1e293b;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 6px 0;
+      transition: 0.3s;
+
+      &:hover { color: #f97316; }
+    }
   }
 
   .desktop-contact-section {
@@ -217,6 +231,12 @@
         background: transparent;
       }
 
+      &.products-menu {
+        max-height: min(420px, 70vh);
+        overflow-y: auto;
+        min-width: 280px;
+      }
+
       li a {
         padding: 12px 25px;
         display: block;
@@ -277,15 +297,16 @@
   }
 
   .navbar .nav-links {
-    position: fixed;
-    top: 65px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
     width: 100%;
     background: white;
     flex-direction: column;
+    align-items: stretch;
     padding: 10px 0;
-    max-height: calc(100vh - 65px);
+    max-height: calc(100dvh - 70px);
     overflow-y: auto;
     flex: unset;
     margin: 0;
@@ -307,9 +328,12 @@
       width: 100%;
       border-bottom: 1px solid #f1f5f9;
 
-      a {
+      a,
+      .dropdown-toggle {
         padding: 14px 20px;
         display: block;
+        width: 100%;
+        text-align: left;
         font-size: 15px;
       }
 
@@ -419,9 +443,8 @@
   }
 
   .navbar .nav-links {
-    top: 56px;
-
-    li a {
+    li a,
+    li .dropdown-toggle {
       padding: 11px 14px;
       font-size: 13px;
     }
@@ -430,5 +453,25 @@
       padding: 10px 14px 10px 28px !important;
       font-size: 12px;
     }
+  }
+}
+
+// Dim page behind the open mobile menu; tapping it closes the menu
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 999;
+}
+
+@media (min-width: 993px) {
+  .menu-backdrop { display: none; }
+}
+
+@media (max-width: 992px) {
+  .navbar .dropdown .dropdown-menu.products-menu {
+    max-height: none;
+    overflow: visible;
+    min-width: unset;
   }
 }

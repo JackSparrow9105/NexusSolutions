@@ -9,7 +9,7 @@
     <div class="product-grid">
       <article [id]="product.id" class="product-card" *ngFor="let product of products">
         <div class="product-image-wrapper">
-          <img [src]="product.image" [alt]="product.title" />
+          <img [src]="product.image" [alt]="product.title" loading="lazy" />
         </div>
         <div class="product-card-content">
           <h3>{{ product.title }}</h3>
@@ -19,14 +19,14 @@
           </ul>
         </div>
         <div class="card-actions">
-          <a href="#" (click)="goToContactForm(product); $event.preventDefault()" class="btn-primary"> Enquire for Installation</a>
-          <button class="btn-secondary" (click)="openModal(product)">View Full Details</button>
+          <button type="button" class="btn-primary" (click)="goToContactForm(product)">Enquire for Installation</button>
+          <button type="button" class="btn-secondary" (click)="openModal(product)">View Full Details</button>
         </div>
       </article>
     </div>
 
     <div class="contact-note">
-      <p>Want help choosing the right product? Click <a href="#" (click)="goToContactForm(); $event.preventDefault()">Order Now</a> to request a quote.</p>
+      <p>Want help choosing the right product? <a routerLink="/" fragment="contact" [queryParams]="{ focus: 'name' }">Request a quote</a> or ask our AI assistant (bottom-right).</p>
     </div>
 
    
@@ -34,7 +34,7 @@
 
    <div class="modal-overlay" *ngIf="selectedProduct as product" (click)="closeModal()">
       <div class="modal-content" (click)="$event.stopPropagation()">
-        <button class="close-btn" (click)="closeModal()">✕</button>
+        <button type="button" class="close-btn" aria-label="Close" (click)="closeModal()">✕</button>
         <div class="modal-grid">
           <div class="modal-visual">
             <img [src]="product.image" [alt]="product.title" />
@@ -51,8 +51,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <a href="#" (click)="goToContactForm(product); $event.preventDefault()" class="btn-primary">Order Now</a>
-              <button class="btn-close-bottom" (click)="closeModal()">Close</button>
+              <button type="button" class="btn-primary" (click)="goToContactForm(product)">Enquire Now</button>
+              <button type="button" class="btn-close-bottom" (click)="closeModal()">Close</button>
             </div>
           </div>
         </div>

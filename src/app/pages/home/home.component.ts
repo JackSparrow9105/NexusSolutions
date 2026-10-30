@@ -1,11 +1,14 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { PRODUCTS, ProductSpec } from '../../shared/product-data';
+import { openWhatsAppLink } from '../../shared/whatsapp';
 
 interface FeaturedProduct {
   title: string;
+  category: string;
   image: string;
   description: string;
   specs: ProductSpec[];
@@ -36,17 +39,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     message: ''
   };
 
+  readonly messageMax = 500;
   serviceOptions: string[] = [];
-  toastMessage: string = '';
-  showToast: boolean = false;
+  errors: { [field: string]: string } = {};
+  submitted = false;
+  toastMessage = '';
+  toastType: 'error' | 'success' = 'error';
+  showToast = false;
   private toastTimeout: any;
 
   constructor(private route: ActivatedRoute) {}
 
   // ================= VALIDATION =================
-  private showToastMessage(msg: string): void {
+  private showToastMessage(msg: string, type: 'error' | 'success' = 'error'): void {
     if (this.toastTimeout) clearTimeout(this.toastTimeout);
     this.toastMessage = msg;
+    this.toastType = type;
     this.showToast = true;
     this.toastTimeout = setTimeout(() => {
       this.showToast = false;
@@ -54,71 +62,76 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 3500);
   }
 
-  private validateForm(): boolean {
-    // 1. Name: required, max 100 chars
+  /** Keep only digits; accept "+91 98765 43210" / "098765..." style input and reduce to 10 digits */
+  onMobileInput(value: string): void {
+    let digits = (value || '').replace(/\D/g, '');
+    if (digits.length > 10 && digits.startsWith('91')) digits = digits.slice(2);
+    if (digits.length > 10 && digits.startsWith('0')) digits = digits.slice(1);
+    this.contactForm.mobile = digits.slice(0, 10);
+    if (this.submitted) this.validateForm(false);
+  }
+
+  onFieldChange(): void {
+    if (this.submitted) this.validateForm(false);
+  }
+
+  private validateForm(showToast = true): boolean {
+    const errors: { [field: string]: string } = {};
     const name = this.contactForm.name.trim();
-    if (!name) {
-      this.showToastMessage('Please enter your full name.');
-      return false;
-    }
-    if (name.length > 100) {
-      this.showToastMessage('Name must be under 100 characters.');
-      return false;
-    }
-
-    // 2. Mobile: required, exactly 10 digits, numeric only
     const mobile = this.contactForm.mobile.trim();
-    if (!mobile) {
-      this.showToastMessage('Please enter your mobile number.');
-      return false;
-    }
-    if (!/^\d{10}$/.test(mobile)) {
-      this.showToastMessage('Mobile number must be exactly 10 digits (numbers only).');
-      return false;
-    }
-
-    // 3. Email: optional, but if provided max 50 chars
     const email = this.contactForm.email.trim();
-    if (email && email.length > 50) {
-      this.showToastMessage('Email address must be under 50 characters.');
-      return false;
-    }
-
-    // 4. Message: optional, but if provided max 500 chars
     const message = this.contactForm.message.trim();
-    if (message && message.length > 500) {
-      this.showToastMessage('Message must be under 500 characters.');
-      return false;
-    }
 
-    return true;
+    if (!name) errors['name'] = 'Please enter your full name.';
+    else if (name.length < 2) errors['name'] = 'Name looks too short.';
+    else if (name.length > 100) errors['name'] = 'Name must be under 100 characters.';
+
+    if (!mobile) errors['mobile'] = 'Please enter your mobile number.';
+    else if (!/^[6-9]\d{9}$/.test(mobile)) errors['mobile'] = 'Enter a valid 10-digit Indian mobile number.';
+
+    if (email && email.length > 50) errors['email'] = 'Email address must be under 50 characters.';
+    else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) errors['email'] = 'Please enter a valid email address.';
+
+    if (message.length > this.messageMax) errors['message'] = `Message must be under ${this.messageMax} characters.`;
+
+    this.errors = errors;
+    const first = Object.keys(errors)[0];
+    if (first && showToast) {
+      this.showToastMessage(errors[first]);
+      document.getElementById(first)?.focus();
+    }
+    return !first;
+  }
+
+  private buildEnquiryText(): string {
+    const f = this.contactForm;
+    const lines = [
+      `Name: ${f.name.trim()}`,
+      `Mobile: ${f.mobile.trim()}`,
+      f.email.trim() ? `Email: ${f.email.trim()}` : '',
+      `Service: ${f.service}`,
+      f.message.trim() ? `\nMessage:\n${f.message.trim()}` : ''
+    ];
+    return lines.filter(Boolean).join('\n');
   }
 
   // ================= WHATSAPP =================
-  sendToWhatsApp() {
+  sendToWhatsApp(): void {
+    this.submitted = true;
     if (!this.validateForm()) return;
-
-    const messageText = `Hello Nexus Solutions,\n\nI would like to make an inquiry:\n\n*Name:* ${this.contactForm.name}\n*Mobile:* ${this.contactForm.mobile}\n*Email:* ${this.contactForm.email}\n*Service:* ${this.contactForm.service}\n*Message:* ${this.contactForm.message}`;
-    const encodedText = encodeURIComponent(messageText);
-    const phoneNumber = '918905302210';
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
-    window.open(whatsappUrl, '_blank');
+    openWhatsAppLink(`Hello Nexus Solutions,\n\nI would like to make an inquiry:\n\n${this.buildEnquiryText()}`);
+    this.showToastMessage('Opening WhatsApp… just press Send there.', 'success');
   }
 
-  // ================= EMAIL (Send Directly) =================
-  sendEmail() {
+  // ================= EMAIL =================
+  sendEmail(): void {
+    this.submitted = true;
     if (!this.validateForm()) return;
-
-    const subject = encodeURIComponent(`Inquiry from ${this.contactForm.name}`);
-    const body = encodeURIComponent(
-      `Name: ${this.contactForm.name}\n` +
-      `Mobile: ${this.contactForm.mobile}\n` +
-      `Email: ${this.contactForm.email}\n` +
-      `Service: ${this.contactForm.service}\n\n` +
-      `Message:\n${this.contactForm.message}`
-    );
-    const mailtoLink = `mailto:sales@mynexussolutions.com?subject=${subject}&body=${body}`;
-    window.open(mailtoLink, '_blank');
+    const subject = encodeURIComponent(`Inquiry from ${this.contactForm.name.trim()}`);
+    const body = encodeURIComponent(this.buildEnquiryText());
+    // Same tab: window.open on a mailto: link leaves an empty tab behind in most browsers
+    window.location.href = `mailto:sales@mynexussolutions.com?subject=${subject}&body=${body}`;
+    this.showToastMessage('Opening your email app…', 'success');
   }
 
   closeToast(): void {
@@ -127,6 +140,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.toastTimeout = null;
     }
     this.showToast = false;
+  }
+
+  /** "Request Quotation" / "Enquire" buttons: scroll to the form and focus the name field */
+  scrollToContact(): void {
+    const el = this.nameInput?.nativeElement;
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => el.focus({ preventScroll: true }), 400);
+  }
+
+  /** Pre-fill the form when the user came from a specific product */
+  private prefillFromProduct(productId: string): void {
+    const product = PRODUCTS.find(p => p.id === productId);
+    if (!product) return;
+    if (this.serviceOptions.includes(product.category)) this.contactForm.service = product.category;
+    if (!this.contactForm.message.trim()) {
+      this.contactForm.message = `I am interested in ${product.title}. Please share price and availability.`;
+    }
   }
 
   // ================= HERO SLIDER =================
@@ -163,22 +194,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 3800);
   }
 
-  // ================= COUNTERS =================
-  years = 0;
-  customers = 0;
-  projects = 0;
-
-  startCounter(): void {
-    const interval = setInterval(() => {
-      if (this.years < 5) this.years++;
-      if (this.customers < 500) this.customers += 100;
-      if (this.projects < 20) this.projects += 5;
-      if (this.years >= 5 && this.customers >= 500 && this.projects >= 20) {
-        clearInterval(interval);
-      }
-    }, 30);
-  }
-
   // ================= TESTIMONIALS =================
   testimonials = [
     {
@@ -201,47 +216,38 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentSlide = 0;
 
   // ================= LIFECYCLE HOOKS =================
-  ngOnInit(): void {
-    this.startCounter();
+  private testimonialTimer: any;
+  private subs: Subscription[] = [];
 
+  ngOnInit(): void {
     const categories = new Set(PRODUCTS.map(p => p.category));
     this.serviceOptions = [
       'All Products',
       ...Array.from(categories).sort(),
       'Other / General Inquiry'
     ];
-    if (this.serviceOptions.length) {
-      this.contactForm.service = this.serviceOptions[0];
-    }
+    this.contactForm.service = this.serviceOptions[0];
 
-    this.route.fragment.subscribe(fragment => {
-      if (fragment === 'contact') this.focusContactForm();
-    });
-    this.route.queryParams.subscribe(params => {
-      if (params['focus'] === 'name') this.focusContactForm();
-    });
+    this.subs.push(this.route.queryParams.subscribe(params => {
+      if (params['product']) this.prefillFromProduct(params['product']);
+      if (params['focus'] === 'name' || params['product']) setTimeout(() => this.scrollToContact(), 300);
+    }));
   }
 
   ngAfterViewInit(): void {
     this.startHeroTimer();
-    setInterval(() => {
+    this.testimonialTimer = setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % this.testimonials.length;
     }, 4000);
   }
 
   ngOnDestroy(): void {
     clearInterval(this.heroTimer);
+    clearInterval(this.testimonialTimer);
     clearTimeout(this.labelTimer);
     if (this.toastTimeout) clearTimeout(this.toastTimeout);
-  }
-
-  private focusContactForm(): void {
-    setTimeout(() => {
-      if (this.nameInput) {
-        this.nameInput.nativeElement.focus();
-        this.nameInput.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 300);
+    this.subs.forEach(s => s.unsubscribe());
+    document.body.style.overflow = '';
   }
 
   // ================= PRODUCT MODAL =================
@@ -249,6 +255,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   productDetails: { [key: string]: FeaturedProduct } = {
     earthing: {
+      category: 'Earthing Pipes & Rods',
       title: 'Earthing Systems',
       image: 'assets/Products/gi-earthing-electrode.jpg',
       description: 'High-conductivity chemical earthing solutions designed for life-long durability and low resistance.',
@@ -260,6 +267,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     lightning: {
+      category: 'Lightning Protection',
       title: 'Lightning Arresters',
       image: 'assets/Products/arrester.jpg',
       description: 'Advanced ESE and conventional rods to safeguard structures from direct strikes.',
@@ -271,6 +279,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     solar: {
+      category: 'Solar & BOS',
       title: 'Solar BOS Components',
       image: 'assets/Products/BOS.png',
       description: 'Complete Balance of System kits for residential and commercial solar installations.',
@@ -282,6 +291,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     cables: {
+      category: 'Wires & Cables',
       title: 'DC Cables',
       image: 'assets/Products/dcCable.jpg',
       description: 'TUV certified XLPO insulated cables designed for solar power applications.',
@@ -301,6 +311,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   closeModal(): void {
     this.selectedProduct = null;
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
+  }
+
+  enquireFromModal(product: FeaturedProduct): void {
+    if (this.serviceOptions.includes(product.category)) this.contactForm.service = product.category;
+    if (!this.contactForm.message.trim()) {
+      this.contactForm.message = `I am interested in ${product.title}. Please share details and a quotation.`;
+    }
+    this.closeModal();
+    setTimeout(() => this.scrollToContact(), 50);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.selectedProduct) this.closeModal();
   }
 }

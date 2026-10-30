@@ -35,6 +35,14 @@
       line-height: 1.6;
       font-size: 0.95rem;
       color: #94A3B8;
+      overflow-wrap: anywhere;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover { color: #f97316; }
+      }
     }
   }
 
@@ -87,4 +95,4 @@
     color: #64748B;
     letter-spacing: 0.5px;
   }
-}
+}

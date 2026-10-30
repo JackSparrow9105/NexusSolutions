@@ -1,0 +1,12 @@
+name = "nexus-ai"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# Free Cloudflare Workers AI – no API key needed
+[ai]
+binding = "AI"
+
+[vars]
+# Add your live domain and GitHub Pages URL here (comma separated, no trailing slash)
+ALLOWED_ORIGINS = "https://jacksparrow9105.github.io/NexusSolutions,https://www.mynexussolutions.com,http://localhost:4200"
+MODEL = "@cf/meta/llama-3.1-8b-instruct"

@@ -2,7 +2,6 @@ import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PRODUCTS } from '../product-data';
-import { openWhatsAppLink } from '../whatsapp';
 
 @Component({
   selector: 'app-navbar',
@@ -17,40 +16,52 @@ export class NavbarComponent {
   isScrolled = false;
   productsMenu = PRODUCTS;
 
-  toggleMenu(close = false) {
-    this.menuOpen = close ? false : !this.menuOpen;
+  private get isDesktop(): boolean {
+    return window.innerWidth > 992;
+  }
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
     if (!this.menuOpen) this.activeDropdown = null;
   }
 
-  openDropdown(menu: string) {
-    if (window.innerWidth > 992) this.activeDropdown = menu;
+  closeMenu(): void {
+    this.menuOpen = false;
+    this.activeDropdown = null;
   }
 
-  closeDropdown() {
-    if (window.innerWidth > 992) this.activeDropdown = null;
+  openDropdown(menu: string): void {
+    if (this.isDesktop) this.activeDropdown = menu;
   }
 
-  toggleDropdown(menu: string, event: Event) {
-    if (window.innerWidth <= 992) {
-      event.stopPropagation();
-      this.activeDropdown = this.activeDropdown === menu ? null : menu;
-    }
+  closeDropdown(): void {
+    if (this.isDesktop) this.activeDropdown = null;
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
+  // Click/tap on "Company" / "Products" — works on mobile, keyboard and touch-screen laptops
+  toggleDropdown(menu: string, event: Event): void {
+    event.stopPropagation();
+    this.activeDropdown = this.activeDropdown === menu ? null : menu;
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
     this.isScrolled = window.scrollY > 50;
   }
 
-  openWhatsApp(): void {
-    openWhatsAppLink('Hello, I would like a quote.');
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closeMenu();
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    if (this.isDesktop && this.menuOpen) this.closeMenu();
   }
 
   downloadBrochure(): void {
-    // Replace with your actual PDF file path
-    const pdfUrl = 'assets/Products/Nexus_Solutions_Brochure-1.pdf';
     const link = document.createElement('a');
-    link.href = pdfUrl;
+    link.href = 'assets/Products/Nexus_Solutions_Brochure-1.pdf';
     link.download = 'Nexus_Solutions_Brochure.pdf';
     link.target = '_blank';
     document.body.appendChild(link);

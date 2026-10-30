@@ -17,6 +17,23 @@ body {
   color: #0F172A;
   line-height: 1.6;
   padding-top: 20px;
+  overflow-x: hidden;
+}
+
+/* Sections reached via #fragment links must not hide under the fixed navbar */
+section,
+[id] {
+  scroll-margin-top: 90px;
+}
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
 }
 
 /* Headings */
