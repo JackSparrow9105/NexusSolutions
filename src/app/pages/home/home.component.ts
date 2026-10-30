@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const subject = encodeURIComponent(`Inquiry from ${this.contactForm.name.trim()}`);
     const body = encodeURIComponent(this.buildEnquiryText());
     // Same tab: window.open on a mailto: link leaves an empty tab behind in most browsers
-    window.location.href = `mailto:sales@mynexussolutions.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@mynexussolutions.com?subject=${subject}&body=${body}`;
     this.showToastMessage('Opening your email app…', 'success');
   }
 

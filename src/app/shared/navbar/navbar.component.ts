@@ -61,8 +61,8 @@ export class NavbarComponent {
 
   downloadBrochure(): void {
     const link = document.createElement('a');
-    link.href = 'assets/Products/Nexus_Solutions_Brochure-1.pdf';
-    link.download = 'Nexus_Solutions_Brochure.pdf';
+    link.href = 'assets/Nexus_Solutions_Company_Profile.pdf';
+    link.download = 'Nexus_Solutions_Company_Profile.pdf';
     link.target = '_blank';
     document.body.appendChild(link);
     link.click();
