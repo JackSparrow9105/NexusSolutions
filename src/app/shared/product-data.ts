@@ -600,12 +600,13 @@ export const PRODUCTS: Product[] = [
   // ============================ WIRE AND CABLES ============================
   {
     id: 'dc-cable',
-    title: 'DC Cable',
+    title: 'Solar DC Cable (4 – 10 sq mm)',
     image: OLD + 'dcCable.jpg',
-    description: 'UV-resistant DC cables for solar rooftop and ground-mounted installations.',
-    features: ['Flexible routing', 'High durability', 'Weatherproof'],
+    description: 'UV-resistant solar DC cables in 4 sq mm, 6 sq mm and 10 sq mm sizes for rooftop and ground-mounted solar installations.',
+    features: ['Sizes: 4, 6 & 10 sq mm', 'UV & weather resistant', 'Flexible routing'],
     category: 'wire-cables',
     specs: [
+      { label: 'Sizes', value: '4 sq mm, 6 sq mm, 10 sq mm' },
       { label: 'Insulation', value: 'XLPO' },
       { label: 'Voltage', value: '1.5kV DC' },
       { label: 'Type', value: '2-core / 4-core' },
