@@ -201,7 +201,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // ================= TESTIMONIALS =================
   testimonials = [
      {
-      message: 'Reliable Lightning Protection ⭐⭐⭐⭐⭐\nWe are very happy with the lightning arrester supplied by Nexus Solutions. The product quality, finishing and technical support were impressive. A reliable partner for electrical safety solutions.',
+      message: 'நம்பகமான மின்னல் பாதுகாப்பு ⭐⭐⭐⭐⭐\nNexus Solutions வழங்கிய மின்னல் தடுப்பானில் நாங்கள் மிகவும் திருப்தியடைந்துள்ளோம். தயாரிப்பின் தரம், நேர்த்தியான முடிப்புப் பணி மற்றும் தொழில்நுட்ப ஆதரவு அனைத்தும் சிறப்பாக இருந்தன. மின்சாரப் பாதுகாப்புத் தீர்வுகளுக்கான நம்பகமான கூட்டாளி.',
       name: 'S. David',
       location: 'Chennai'
     }, 
