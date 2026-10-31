@@ -346,28 +346,10 @@
 <section class="testimonials" id="testimonials">
   <div class="container">
     <span class="badge-light">Testimonials</span>
-    <h2>Trusted by Industry Leaders</h2>
+    <h2>What Our Customers Say</h2>
     
-    <div class="testimonial-container">
-      <div class="testimonial-slider">
-        <div class="testimonial-card" *ngFor="let t of testimonials; let i = index" [class.active]="i === currentSlide">
-          <div class="quote-icon">“</div>
-          <div class="stars">★★★★★</div>
-          <p class="message">{{ t.message }}</p>
-          <div class="client-meta">
-            <h4>{{ t.name }}</h4>
-            <span>{{ t.location }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="slider-dots">
-        <button type="button" *ngFor="let t of testimonials; let i = index"
-              [class.active]="i === currentSlide"
-              [attr.aria-label]="'Show testimonial ' + (i + 1)"
-              (click)="currentSlide = i"></button>
-      </div>
-    </div>
+    <p class="reviews-sub">Customers across South India rely on Nexus Solutions for earthing, lightning protection and solar BOS materials.</p>
+    <app-reviews-map [reviews]="testimonials"></app-reviews-map>
   </div>
 </section>
 <section class="contact" id="contact">

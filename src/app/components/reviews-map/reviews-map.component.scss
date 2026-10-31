@@ -1,0 +1,234 @@
+// Map-style customer reviews (mobile-first)
+$orange: #f97316;
+$navy: #0f172a;
+$muted: #64748b;
+$line: #e2e8f0;
+
+.reviews-map {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.map-wrap {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+}
+
+.state {
+  pointer-events: none;
+  fill: #e8eef6;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.state-label {
+  font: 600 20px 'Inter', sans-serif;
+  fill: #94a3b8;
+  text-anchor: middle;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+
+.pin {
+  cursor: pointer;
+  outline: none;
+
+  .hit { fill: transparent; }
+
+  .dot {
+    fill: $navy;
+    stroke: #fff;
+    stroke-width: 3;
+    r: 11;
+    transition: fill 0.25s, r 0.25s;
+  }
+
+  .pulse {
+    fill: $orange;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .city {
+    font: 600 24px 'Inter', sans-serif; // larger on phones, where the map is drawn small
+    fill: $navy;
+    paint-order: stroke;
+    stroke: #f8fafc;
+    stroke-width: 5px;
+  }
+
+  &:hover .dot,
+  &:focus-visible .dot { fill: $orange; }
+
+  &.active {
+    .dot { fill: $orange; r: 13; }
+    .pulse { animation: pulse 1.8s ease-out infinite; }
+    .city { fill: #c2410c; font-weight: 700; }
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.55; transform: scale(1); }
+  100% { opacity: 0; transform: scale(3.2); }
+}
+
+.review-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid $line;
+  border-left: 4px solid $orange;
+  border-radius: 16px;
+  padding: 22px 20px 20px;
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.06);
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: cardIn 0.4s ease-out;
+
+  .quote-mark {
+    position: absolute;
+    top: -4px;
+    right: 16px;
+    font: 80px/1 serif;
+    color: #fde3cc;
+  }
+
+  .message {
+    position: relative;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #334155;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: $navy;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 700 17px 'Inter', sans-serif;
+    flex-shrink: 0;
+  }
+
+  strong {
+    display: block;
+    color: $navy;
+    font-size: 16px;
+  }
+
+  .where {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: $orange;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+
+  .count {
+    font-size: 14px;
+    color: $muted;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  .arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid $line;
+    background: #fff;
+    color: $navy;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+    &:hover {
+      background: $orange;
+      border-color: $orange;
+      color: #fff;
+    }
+  }
+}
+
+.hint {
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 8px;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (min-width: 768px) {
+  .reviews-map {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .map-wrap {
+    flex: 0 0 44%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .review-side { flex: 1; }
+
+  .pin .city { font-size: 17px; }
+  .pin .dot { r: 9; }
+  .state-label { font-size: 15px; }
+
+  .review-card {
+    padding: 32px 30px 26px;
+    min-height: 220px;
+
+    .message { font-size: 1.2rem; }
+  }
+
+  .nav { justify-content: flex-start; }
+  .hint { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin.active .pulse,
+  .review-card { animation: none; }
+}

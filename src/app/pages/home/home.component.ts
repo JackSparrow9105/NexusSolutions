@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { PRODUCTS, CATEGORIES, ProductCategory, Product, getCategory, productsInCategory } from '../../shared/product-data';
 import { openWhatsAppLink } from '../../shared/whatsapp';
 import { CATALOGUE } from '../../shared/catalogue';
+import { ReviewsMapComponent } from '../../components/reviews-map/reviews-map.component';
 
 interface HeroSlide {
   /** base name in assets/hero/ – each image exists as -800, -1600 and -2400.webp */
@@ -18,7 +19,7 @@ interface HeroSlide {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReviewsMapComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -263,9 +264,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     setTimeout(() => (this.restOfSlidesReady = true), 1500);
     this.startHeroTimer();
-    this.testimonialTimer = setInterval(() => {
-      this.currentSlide = (this.currentSlide + 1) % this.testimonials.length;
-    }, 4000);
   }
 
   ngOnDestroy(): void {

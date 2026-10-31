@@ -1016,6 +1016,14 @@ $bg-soft: #f8fafc;
   }
 }
 
+.reviews-sub {
+  max-width: 600px;
+  margin: 0 auto 24px;
+  color: $muted;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 /* Dots: 44px tap area around a small visual dot */
 .slider-dots {
   margin-top: 12px;

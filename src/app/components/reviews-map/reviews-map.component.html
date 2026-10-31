@@ -1,0 +1,45 @@
+<div class="reviews-map" *ngIf="pins.length">
+  <!-- MAP -->
+  <div class="map-wrap">
+    <svg [attr.viewBox]="viewBox" role="img" aria-label="Map of South India showing customer locations">
+      <path *ngFor="let s of states" class="state" [attr.d]="s.d"></path>
+      <text *ngFor="let s of states" class="state-label" [attr.x]="s.labelX" [attr.y]="s.labelY">{{ s.name }}</text>
+
+      <g *ngFor="let p of pins; let i = index" class="pin" [class.active]="i === active"
+         (click)="select(i)" (keydown.enter)="select(i)" (keydown.space)="select(i); $event.preventDefault()"
+         tabindex="0" role="button" [attr.aria-label]="'Review from ' + p.review.name + ', ' + p.city"
+         [attr.aria-pressed]="i === active">
+        <circle class="hit" [attr.cx]="p.x" [attr.cy]="p.y" r="26"></circle>
+        <circle class="pulse" [attr.cx]="p.x" [attr.cy]="p.y" r="10"></circle>
+        <circle class="dot" [attr.cx]="p.x" [attr.cy]="p.y" r="9"></circle>
+        <text class="city" [attr.x]="labelLeft(p) ? p.x - 16 : p.x + 16" [attr.y]="p.y + 5"
+              [attr.text-anchor]="labelLeft(p) ? 'end' : 'start'">{{ p.city }}</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- REVIEW CARD -->
+  <div class="review-side">
+    <div class="review-card" *ngIf="current as c" aria-live="polite">
+      <div class="quote-mark" aria-hidden="true">“</div>
+      <p class="message" lang="auto">{{ c.review.message }}</p>
+      <div class="who">
+        <span class="avatar" aria-hidden="true">{{ c.review.name.trim().charAt(0) }}</span>
+        <div>
+          <strong>{{ c.review.name }}</strong>
+          <span class="where">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+            {{ c.city }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button type="button" class="arrow" (click)="next(-1)" aria-label="Previous review">‹</button>
+      <span class="count">{{ active + 1 }} / {{ pins.length }}</span>
+      <button type="button" class="arrow" (click)="next(1)" aria-label="Next review">›</button>
+    </div>
+    <p class="hint">Tap a pin on the map to read reviews from that city.</p>
+  </div>
+</div>
