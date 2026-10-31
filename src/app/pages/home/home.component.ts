@@ -8,7 +8,7 @@ import { openWhatsAppLink } from '../../shared/whatsapp';
 import { CATALOGUE } from '../../shared/catalogue';
 
 interface HeroSlide {
-  /** base name in assets/hero/ – each image exists as -800.webp (phones) and -1600.webp (desktop) */
+  /** base name in assets/hero/ – each image exists as -800, -1600 and -2400.webp */
   name: string;
   label: string;
   /** which part of the photo stays visible when phones crop it (CSS object-position) */
@@ -165,7 +165,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'lightning', label: 'Lightning Protection & Earthing', focus: '76% 62%' },
   ]
 
-  heroSrc(slide: HeroSlide, size: 800 | 1600): string {
+  heroSrc(slide: HeroSlide, size: 800 | 1600 | 2400): string {
     return `assets/hero/${slide.name}-${size}.webp`;
   }
 
@@ -199,21 +199,45 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ================= TESTIMONIALS =================
   testimonials = [
-    {
-      message: 'Excellent service and fast installation. Highly recommended!',
-      name: 'Rahul Sharma',
-      location: 'Lucknow'
+     {
+      message: 'Since installing solar, I have seen a big reduction in my electricity bills.',
+      name: 'Venkat Kanna',
+      location: 'Trichy'
     },
     {
-      message: 'Very professional team and great product quality.',
-      name: 'Anita Verma',
-      location: 'Ayodhya'
+      message: 'சேவை மிகவும் சிறப்பாக இருந்தது; நிறுவலும் விரைவாக முடிந்தது. நிச்சயமாக பரிந்துரைக்கிறேன்.',
+      name: 'S David',
+      location: 'Chennai'
+    }, {
+      message: 'I am paying much less for electricity after switching to solar.',
+      name: 'Saravanan',
+      location: 'Vijayawada'
+    }, 
+     {
+      message: 'Solar has helped me cut down my electricity expenses considerably.',
+      name: 'R Vijay',
+      location: 'Coimbatore'
     },
-    {
-      message: 'Saved huge electricity bills after installing solar.',
-      name: 'Suresh Yadav',
-      location: 'Ghaziabad'
-    }
+     {
+      message: 'தொழில்முறை அணுகுமுறையும் தரமான பொருட்களும் இந்த அனுபவத்தை சிறப்பாக்கின.',
+      name: 'Krishnamoorthy',
+      location: 'Salem'
+    },
+     {
+      message: 'My electricity bills have come down significantly since the solar installation.',
+      name: 'Karthik',
+      location: 'Hyderabad'
+    },
+     {
+      message: 'Installing solar has made a noticeable difference to my electricity costs.',
+      name: 'Bharath',
+      location: 'Bengaluru'
+    },
+     {
+      message: 'I have seen substantial savings on my electricity bills with solar.',
+      name: 'R. Joseph',
+      location: 'Kerala'
+    } 
   ];
 
   currentSlide = 0;

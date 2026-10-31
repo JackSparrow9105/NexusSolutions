@@ -2,7 +2,7 @@
 
   <!-- BACKGROUND SLIDES -->
   <div class="slides-wrap">
-    <!-- Phones download the 800px image (~80 KB), desktops the 1600px one -->
+    <!-- Each slide exists at 800 / 1600 / 2400 px; the browser picks the size the screen needs -->
     <ng-container *ngFor="let slide of heroSlides; let i = index">
     <img
       *ngIf="i === 0 || restOfSlidesReady"
@@ -10,7 +10,7 @@
       [class.active]="i === heroSlide"
       [style.object-position]="slide.focus || 'center'"
       [src]="heroSrc(slide, 800)"
-      [attr.srcset]="heroSrc(slide, 800) + ' 800w, ' + heroSrc(slide, 1600) + ' 1600w'"
+      [attr.srcset]="heroSrc(slide, 800) + ' 800w, ' + heroSrc(slide, 1600) + ' 1600w, ' + heroSrc(slide, 2400) + ' 2400w'"
       sizes="100vw"
       alt=""
       [attr.fetchpriority]="i === 0 ? 'high' : 'low'"
