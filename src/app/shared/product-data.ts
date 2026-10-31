@@ -82,7 +82,7 @@ export const CATEGORIES: ProductCategory[] = [
     id: 'wire-cables',
     name: 'Wire and Cables',
     description: 'Solar DC cables, power cables and copper / brass earthing wires for safe power distribution and grounding.',
-    image: OLD + 'dcCable.jpg',
+    image: IMG + 'dc-cable.webp',
     highlights: ['UV-resistant solar DC cables', 'XLPE / PVC power cables', 'Copper & brass earthing wire'],
     featured: false
   }
@@ -601,7 +601,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'dc-cable',
     title: 'Solar DC Cable (4 – 10 sq mm)',
-    image: OLD + 'dcCable.jpg',
+    image: IMG + 'dc-cable.webp',
     description: 'UV-resistant solar DC cables in 4 sq mm, 6 sq mm and 10 sq mm sizes for rooftop and ground-mounted solar installations.',
     features: ['Sizes: 4, 6 & 10 sq mm', 'UV & weather resistant', 'Flexible routing'],
     category: 'wire-cables',
@@ -616,7 +616,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'cables',
     title: 'Cables',
-    image: OLD + 'cables.jpg',
+    image: IMG + 'cables.webp',
     description: 'Industrial-grade cables for power distribution and grounding applications.',
     features: ['Durable insulation', 'High current', 'Weather resistant'],
     category: 'wire-cables',
@@ -630,7 +630,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'copper-wire',
     title: 'Copper Wire',
-    image: OLD + 'copper wire.jpg',
+    image: IMG + 'copper-wire.webp',
     description: 'High quality copper wires for earthing and electrical grounding.',
     features: ['Low resistance', 'Flexible', 'Long lasting'],
     category: 'wire-cables',
@@ -642,9 +642,22 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'gi-wire',
+    title: 'GI Wire',
+    image: IMG + 'gi-wire.webp',
+    description: 'Galvanized iron (GI) wire for earthing, bonding and general electrical installation work.',
+    features: ['Zinc coated (galvanized)', 'Corrosion resistant', 'Flexible & easy to handle'],
+    category: 'wire-cables',
+    specs: [
+      { label: 'Material', value: 'Galvanized iron' },
+      { label: 'Form', value: 'Coiled' },
+      { label: 'Application', value: 'Earthing & bonding' }
+    ]
+  },
+  {
     id: 'brass-wire',
     title: 'Brass Wire',
-    image: OLD + 'brass wire.jpg',
+    image: IMG + 'brass-wire.webp',
     description: 'Flexible brass wire for grounding connections and earthing joints.',
     features: ['High tensile strength', 'Oxidation resistant', 'Flexible'],
     category: 'wire-cables',
