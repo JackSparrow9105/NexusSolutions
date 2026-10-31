@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CATEGORIES } from '../product-data';
+import { CATALOGUE } from '../catalogue';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,7 @@ export class NavbarComponent {
   activeDropdown: string | null = null;
   isScrolled = false;
   categories = CATEGORIES;
+  readonly catalogue = CATALOGUE;
 
   private get isDesktop(): boolean {
     return window.innerWidth > 992;
@@ -57,15 +59,5 @@ export class NavbarComponent {
   @HostListener('window:resize')
   onResize(): void {
     if (this.isDesktop && this.menuOpen) this.closeMenu();
-  }
-
-  downloadBrochure(): void {
-    const link = document.createElement('a');
-    link.href = 'assets/Nexus_Solutions_Company_Profile.pdf';
-    link.download = 'Nexus_Solutions_Company_Profile.pdf';
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   }
 }

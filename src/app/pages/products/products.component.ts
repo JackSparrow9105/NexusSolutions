@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PRODUCTS, CATEGORIES, Product, ProductCategory, getCategory } from '../../shared/product-data';
+import { CATALOGUE } from '../../shared/catalogue';
 
 type Tab = 'all' | ProductCategory['id'];
 
@@ -16,6 +17,7 @@ type Tab = 'all' | ProductCategory['id'];
 export class ProductsComponent implements OnInit, OnDestroy {
   readonly categories = CATEGORIES;
   readonly totalCount = PRODUCTS.length;
+  readonly catalogue = CATALOGUE;
 
   activeTab: Tab = 'all';
   visibleProducts: Product[] = PRODUCTS;

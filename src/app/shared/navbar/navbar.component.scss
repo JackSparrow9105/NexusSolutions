@@ -78,23 +78,19 @@ $text: #1e293b;
 }
 
 .mobile-brochure-btn {
-  background: transparent;
+  background: $red;
+  color: #fff;
   border: none;
-  padding: 0 6px;
-  color: $red;
+  padding: 0 10px;
+  margin: 0 2px;
+  height: 36px;
+  min-width: 0;
+  font: 700 12px 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.35);
 
-  .pdf-icon {
-    font-size: 18px;
-    background: $red;
-    border-radius: 6px;
-    width: 32px;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .btn-text { display: none; }
+  &:active { transform: scale(0.97); }
 }
 
 .hamburger {
@@ -216,12 +212,9 @@ small {
   .logo img { height: 44px; }
 
   .mobile-brochure-btn {
-    background: $red;
-    color: #fff;
-    padding: 0 12px;
-
-    .pdf-icon { background: none; width: auto; height: auto; }
-    .btn-text { display: inline; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
   }
 }
 
@@ -345,7 +338,7 @@ small {
     cursor: pointer;
     transition: 0.3s;
 
-    .pdf-icon { font-size: 16px; }
+    text-decoration: none;
 
     &:hover {
       background: transparent;

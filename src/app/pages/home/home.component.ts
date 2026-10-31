@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PRODUCTS, CATEGORIES, ProductCategory, Product, getCategory, productsInCategory } from '../../shared/product-data';
 import { openWhatsAppLink } from '../../shared/whatsapp';
+import { CATALOGUE } from '../../shared/catalogue';
 
 interface HeroSlide {
   /** base name in assets/hero/ – each image exists as -800.webp (phones) and -1600.webp (desktop) */
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   readonly messageMax = 500;
+  readonly catalogue = CATALOGUE;
   serviceOptions: string[] = [];
   errors: { [field: string]: string } = {};
   submitted = false;

@@ -779,6 +779,125 @@ $bg-soft: #f8fafc;
 }
 
 /* ============================================================
+   CATALOGUE DOWNLOAD (hero button + section)
+   ============================================================ */
+.btn-catalogue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 8px;
+  background: #fff;
+  color: $navy;
+  font: 700 15px 'Inter', sans-serif;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  svg { color: #e74c3c; flex-shrink: 0; }
+
+  &:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3); }
+}
+
+.catalogue-cta {
+  padding: 48px 0;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border-top: 1px solid #fed7aa;
+  border-bottom: 1px solid #fed7aa;
+}
+
+.catalogue-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}
+
+.catalogue-cover {
+  display: block;
+  width: 170px;
+  flex-shrink: 0;
+  transform: rotate(-3deg);
+  transition: transform 0.3s;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
+  }
+
+  &:hover { transform: rotate(0) scale(1.03); }
+}
+
+.catalogue-text {
+  max-width: 560px;
+
+  h2 {
+    font-size: 26px;
+    line-height: 1.25;
+    color: $navy;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: $slate;
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+  }
+}
+
+.btn-catalogue--big {
+  width: 100%;
+  min-height: 56px;
+  flex-wrap: wrap;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 16px;
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.35);
+
+  svg { color: #fff; }
+
+  .file-meta {
+    width: 100%;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-top: -6px;
+    padding-bottom: 6px;
+  }
+
+  &:hover { box-shadow: 0 12px 26px rgba(231, 76, 60, 0.45); }
+}
+
+@media (min-width: 768px) {
+  .catalogue-cta { padding: 64px 0; }
+
+  .catalogue-inner {
+    flex-direction: row;
+    justify-content: center;
+    text-align: left;
+    gap: 56px;
+  }
+
+  .catalogue-cover { width: 220px; }
+
+  .catalogue-text h2 { font-size: 32px; }
+
+  .btn-catalogue--big {
+    width: auto;
+    padding: 8px 28px;
+    flex-direction: row;
+
+    .file-meta { width: auto; margin: 0 0 0 4px; padding: 0; }
+  }
+}
+
+/* ============================================================
    WHY CHOOSE US
    ============================================================ */
 .why-us {

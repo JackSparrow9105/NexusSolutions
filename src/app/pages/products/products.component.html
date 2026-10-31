@@ -4,6 +4,10 @@
       <span class="badge-light">Products</span>
       <h1>{{ activeCategory?.name || 'Explore All Products' }}</h1>
       <p>{{ activeCategory?.description || 'Lightning arrester systems, earthing systems, strips, solar BOS items, wire and cables: everything for electrical safety, from one supplier.' }}</p>
+      <a class="catalogue-link" [href]="catalogue.url" [attr.download]="catalogue.fileName" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download Catalogue <span class="meta">(PDF, {{ catalogue.size }})</span>
+      </a>
     </header>
 
     <!-- Category tabs: scroll sideways on phones -->

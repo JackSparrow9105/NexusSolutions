@@ -55,10 +55,13 @@
 
     <div class="hero-buttons">
   <a [routerLink]="['/products']" class="btn-primary">Explore Products</a>
-  <!-- Replaced PDF download with a scroll & focus action -->
   <button type="button" class="btn-secondary" (click)="scrollToContact()">
     Request Quotation
   </button>
+  <a class="btn-catalogue" [href]="catalogue.url" [attr.download]="catalogue.fileName" target="_blank" rel="noopener">
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+    Download Catalogue
+  </a>
 </div>
     </div>
   </div>
@@ -295,6 +298,26 @@
     </div>
   </div>
 </section>
+<!-- CATALOGUE DOWNLOAD -->
+<section class="catalogue-cta" id="catalogue">
+  <div class="container catalogue-inner">
+    <a class="catalogue-cover" [href]="catalogue.url" [attr.download]="catalogue.fileName" target="_blank" rel="noopener" aria-label="Download catalogue">
+      <img [src]="catalogue.cover" alt="Nexus Solutions product catalogue cover" width="420" height="594" loading="lazy">
+    </a>
+    <div class="catalogue-text">
+      <span class="section-tag">Product Catalogue</span>
+      <h2>Download Our Complete Catalogue</h2>
+      <p>Product codes, size tables and specifications for lightning arresters, earthing electrodes,
+        strips, backfill compound, pit covers and LPS accessories, all in one PDF.</p>
+      <a class="btn-catalogue btn-catalogue--big" [href]="catalogue.url" [attr.download]="catalogue.fileName" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download Catalogue
+        <span class="file-meta">PDF · {{ catalogue.pages }} pages · {{ catalogue.size }}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section class="why-us" id="why-us">
   <div class="container">
     <h2>Why Choose Us</h2>

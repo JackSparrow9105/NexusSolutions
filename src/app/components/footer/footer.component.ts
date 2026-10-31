@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CATEGORIES } from '../../shared/product-data';
+import { CATALOGUE } from '../../shared/catalogue';
 
 @Component({
   selector: 'app-footer',
@@ -12,5 +13,6 @@ import { CATEGORIES } from '../../shared/product-data';
 })
 export class FooterComponent {
   readonly categories = CATEGORIES;
+  readonly catalogue = CATALOGUE;
   readonly year = new Date().getFullYear();
 }
