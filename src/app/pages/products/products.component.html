@@ -1,17 +1,33 @@
 <section class="products-page">
   <div class="container">
-    <div class="page-header">
+    <header class="page-header">
       <span class="badge-light">Products</span>
-      <h1>Explore All Products</h1>
-      <p>Browse our complete product catalog with earthing systems, lightning protection, solar BOS, cables, and accessories.</p>
-    </div>
+      <h1>{{ activeCategory?.name || 'Explore All Products' }}</h1>
+      <p>{{ activeCategory?.description || 'Lightning arrester systems, earthing systems, strips, solar BOS items, wire and cables: everything for electrical safety, from one supplier.' }}</p>
+    </header>
+
+    <!-- Category tabs: scroll sideways on phones -->
+    <nav class="category-tabs" aria-label="Product categories">
+      <button type="button" class="tab" [class.active]="activeTab === 'all'"
+              [attr.aria-pressed]="activeTab === 'all'" (click)="selectTab('all')">
+        All <span class="count">{{ totalCount }}</span>
+      </button>
+      <button type="button" class="tab" *ngFor="let c of categories" [class.active]="activeTab === c.id"
+              [attr.aria-pressed]="activeTab === c.id" (click)="selectTab(c.id)">
+        {{ c.name }} <span class="count">{{ countFor(c.id) }}</span>
+      </button>
+    </nav>
 
     <div class="product-grid">
-      <article [id]="product.id" class="product-card" *ngFor="let product of products">
-        <div class="product-image-wrapper">
-          <img [src]="product.image" [alt]="product.title" loading="lazy" />
-        </div>
+      <article [id]="product.id" class="product-card" *ngFor="let product of visibleProducts; trackBy: trackById">
+        <button type="button" class="product-image-wrapper" (click)="openModal(product)" [attr.aria-label]="'View details: ' + product.title">
+          <img [src]="product.image" [alt]="product.title" loading="lazy" decoding="async" width="600" height="600" />
+        </button>
         <div class="product-card-content">
+          <div class="card-meta">
+            <span class="card-category" *ngIf="activeTab === 'all'">{{ categoryName(product) }}</span>
+            <span class="card-code" *ngIf="product.code">{{ product.code }}</span>
+          </div>
           <h3>{{ product.title }}</h3>
           <p>{{ product.description }}</p>
           <ul>
@@ -19,43 +35,68 @@
           </ul>
         </div>
         <div class="card-actions">
-          <button type="button" class="btn-primary" (click)="goToContactForm(product)">Enquire for Installation</button>
-          <button type="button" class="btn-secondary" (click)="openModal(product)">View Full Details</button>
+          <button type="button" class="btn-primary" (click)="goToContactForm(product)">Enquire Now</button>
+          <button type="button" class="btn-secondary" (click)="openModal(product)">
+            {{ product.table ? 'Specs & Sizes' : 'View Details' }}
+          </button>
         </div>
       </article>
     </div>
 
     <div class="contact-note">
-      <p>Want help choosing the right product? <a routerLink="/" fragment="contact" [queryParams]="{ focus: 'name' }">Request a quote</a> or ask our AI assistant (bottom-right).</p>
+      <p>Need help choosing the right product?
+        <a routerLink="/" fragment="contact" [queryParams]="{ focus: 'name' }">Request a quote</a>
+        or ask our AI assistant.</p>
     </div>
-
-   
   </div>
 
-   <div class="modal-overlay" *ngIf="selectedProduct as product" (click)="closeModal()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <button type="button" class="close-btn" aria-label="Close" (click)="closeModal()">✕</button>
-        <div class="modal-grid">
-          <div class="modal-visual">
-            <img [src]="product.image" [alt]="product.title" />
+  <!-- PRODUCT DETAILS POPUP -->
+  <div class="modal-overlay" *ngIf="selectedProduct as product" (click)="closeModal()">
+    <div class="modal-content" role="dialog" aria-modal="true" [attr.aria-label]="product.title" (click)="$event.stopPropagation()">
+      <button type="button" class="close-btn" aria-label="Close" (click)="closeModal()">✕</button>
+      <div class="modal-grid">
+        <div class="modal-visual">
+          <img [src]="product.image" [alt]="product.title" />
+        </div>
+        <div class="modal-details">
+          <div class="card-meta">
+            <span class="category-tag">{{ categoryName(product) }}</span>
+            <span class="card-code" *ngIf="product.code">Code: {{ product.code }}</span>
           </div>
-          <div class="modal-details">
-            <span class="category-tag">Product Details</span>
-            <h2>{{ product.title }}</h2>
-            <p>{{ product.description }}</p>
-            <div class="specs-section">
-              <h3>Key Specifications</h3>
-              <div class="spec-row" *ngFor="let spec of product.specs">
-                <span class="spec-label">{{ spec.label }}</span>
-                <span class="spec-value">{{ spec.value }}</span>
-              </div>
+          <h2>{{ product.title }}</h2>
+          <p>{{ product.description }}</p>
+
+          <div class="specs-section">
+            <h3>Key Specifications</h3>
+            <div class="spec-row" *ngFor="let spec of product.specs">
+              <span class="spec-label">{{ spec.label }}</span>
+              <span class="spec-value">{{ spec.value }}</span>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn-primary" (click)="goToContactForm(product)">Enquire Now</button>
-              <button type="button" class="btn-close-bottom" (click)="closeModal()">Close</button>
+          </div>
+
+          <div class="size-table" *ngIf="product.table as t">
+            <h3>{{ t.title || 'Models & Sizes' }}</h3>
+            <div class="table-scroll" tabindex="0" role="region" [attr.aria-label]="t.title || 'Models and sizes'">
+              <table>
+                <thead>
+                  <tr><th *ngFor="let col of t.columns" scope="col">{{ col }}</th></tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of t.rows">
+                    <td *ngFor="let cell of row">{{ cell }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p class="table-note" *ngIf="t.note">{{ t.note }}</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-primary" (click)="goToContactForm(product)">Enquire Now</button>
+            <button type="button" class="btn-close-bottom" (click)="closeModal()">Close</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </section>

@@ -14,7 +14,7 @@ to call or WhatsApp instead – nothing breaks and you are never charged.
    wrangler login
    ```
 3. Edit `wrangler.toml` → `ALLOWED_ORIGINS`: add your live site address, e.g.
-   `"https://mynexussolutions.com,https://www.mynexussolutions.com,http://localhost:4200"`
+   `"https://www.mynexussolutions.in,https://mynexussolutions.in,http://localhost:4200"`
 4. Deploy:
    ```bash
    wrangler deploy

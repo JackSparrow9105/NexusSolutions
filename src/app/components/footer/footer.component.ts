@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CATEGORIES } from '../../shared/product-data';
 
 @Component({
   selector: 'app-footer',
@@ -9,4 +10,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent {}
+export class FooterComponent {
+  readonly categories = CATEGORIES;
+  readonly year = new Date().getFullYear();
+}

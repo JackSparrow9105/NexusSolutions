@@ -1,459 +1,184 @@
+// ================================================
+// NAVBAR  (mobile-first: base = phones, min-width = bigger screens)
+// Desktop layout starts at 993px (matches isDesktop in navbar.component.ts)
+// ================================================
+$orange: #f97316;
+$red: #e74c3c;
+$navy: #0f172a;
+$text: #1e293b;
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 60px;
-  background: white;
+  gap: 8px;
+  height: 56px;
+  padding: 0 8px 0 12px;
+  background: #fff;
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
-  gap: 20px;
+  transition: box-shadow 0.3s ease, background 0.3s ease, height 0.3s ease;
 
-  .logo {
-    font-size: 24px;
-    font-weight: 800;
-    color: #0f172a;
-    letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    text-decoration: none;
-
-    img {
-      height: 48px;
-      width: auto;
-    }
-
-    span { color: #f97316; }
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
   }
+}
 
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 32px;
+// ---------- Logo ----------
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+
+  img {
+    height: 34px;
+    width: auto;
+  }
+}
+
+// ---------- Mobile actions: call, brochure, menu (44px tap targets) ----------
+.mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.mobile-phone-link,
+.mobile-brochure-btn,
+.hamburger {
+  min-width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobile-phone-link {
+  color: $navy;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0 6px;
+
+  .phone-icon { font-size: 20px; }
+  .phone-number { display: none; }
+
+  &:hover { background: #fff3e8; }
+}
+
+.mobile-brochure-btn {
+  background: transparent;
+  border: none;
+  padding: 0 6px;
+  color: $red;
+
+  .pdf-icon {
+    font-size: 18px;
+    background: $red;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    padding: 0;
-    flex: 1;
-
-    li a {
-      text-decoration: none;
-      color: #1e293b;
-      font-weight: 600;
-      font-size: 15px;
-      transition: 0.3s;
-      cursor: pointer;
-      padding: 6px 0;
-
-      &:hover { color: #f97316; }
-    }
-
-    .dropdown-toggle {
-      background: none;
-      border: none;
-      font: inherit;
-      color: #1e293b;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      padding: 6px 0;
-      transition: 0.3s;
-
-      &:hover { color: #f97316; }
-    }
   }
 
-  .desktop-contact-section {
+  .btn-text { display: none; }
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: $navy;
+  line-height: 1;
+}
+
+// Desktop-only section hidden on phones
+.desktop-contact-section { display: none; }
+
+// ---------- Mobile slide-down menu ----------
+.nav-links {
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px 0;
+  background: #fff;
+  flex-direction: column;
+  max-height: calc(100dvh - 56px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-bottom: 1px solid #f1f5f9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: none;
+
+  &.active {
+    display: flex;
+    animation: menuIn 0.2s ease-out;
+  }
+
+  > li {
+    border-bottom: 1px solid #f1f5f9;
+
+    &:last-child { border-bottom: none; }
+  }
+
+  a,
+  .dropdown-toggle {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-shrink: 0;
-
-    .phone-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: #0f172a;
-      font-weight: 600;
-      font-size: 14px;
-      transition: 0.3s;
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: 2px solid transparent;
-      white-space: nowrap;
-
-      .phone-icon {
-        font-size: 18px;
-        color: #e74c3c;
-      }
-
-      &:hover {
-        color: #f97316;
-        border-color: #fed7aa;
-        background: #fff3e8;
-      }
-    }
-
-    .brochure-btn {
-      background: #e74c3c;
-      border: 2px solid #e74c3c;
-      padding: 10px 24px;
-      border-radius: 6px;
-      color: white;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 13px;
-      cursor: pointer;
-      transition: 0.3s;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      .pdf-icon { font-size: 16px; }
-
-      &:hover {
-        background: transparent;
-        color: #e74c3c;
-      }
-    }
-  }
-
-  .mobile-actions {
-    display: none;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
-  .mobile-phone-link {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-    color: #0f172a;
-    font-weight: 600;
-    font-size: 13px;
-    padding: 5px 8px;
-    border-radius: 6px;
-    border: 1.5px solid transparent;
-    transition: 0.3s;
-    white-space: nowrap;
-
-    .phone-icon {
-      font-size: 18px;
-      color: #e74c3c;
-    }
-
-    .phone-number {
-      font-size: 12px;
-    }
-
-    &:hover {
-      border-color: #fed7aa;
-      background: #fff3e8;
-    }
-  }
-
-  .mobile-brochure-btn {
-    background: #e74c3c;
-    border: 1.5px solid #e74c3c;
-    padding: 5px 10px;
-    border-radius: 6px;
-    color: white;
-    font-weight: 700;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-
-    .pdf-icon { font-size: 15px; }
-
-    .btn-text {
-      font-size: 11px;
-      text-transform: uppercase;
-    }
-
-    &:hover {
-      background: transparent;
-      color: #e74c3c;
-    }
-  }
-
-  .hamburger {
-    display: none;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 20px;
     background: none;
     border: none;
-    font-size: 26px;
+    text-align: left;
+    text-decoration: none;
+    color: $text;
+    font: 600 15px 'Inter', sans-serif;
     cursor: pointer;
-    color: #0f172a;
-    padding: 4px 6px;
-    flex-shrink: 0;
-    line-height: 1;
-    align-items: center;
-    justify-content: center;
-  }
+    transition: color 0.2s;
 
-  .dropdown {
-    position: relative;
-    padding-bottom: 15px;
-    margin-bottom: -15px;
-
-    .dropdown-menu {
-      position: absolute;
-      top: 100%;
-      left: -20px;
-      background: white;
-      min-width: 220px;
-      padding: 10px 0;
-      border-radius: 8px;
-      border-top: 3px solid #f97316;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      margin-top: 0;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: -15px;
-        left: 0;
-        width: 100%;
-        height: 15px;
-        background: transparent;
-      }
-
-      &.products-menu {
-        max-height: min(420px, 70vh);
-        overflow-y: auto;
-        min-width: 280px;
-      }
-
-      li a {
-        padding: 12px 25px;
-        display: block;
-        font-weight: 500;
-        color: #475569;
-        transition: background 0.2s;
-
-        &:hover {
-          background: #f8fafc;
-          color: #f97316;
-        }
-      }
-    }
-  }
-
-  small {
-    display: inline-block;
-    transition: 0.3s;
-
-    &.rotate {
-      transform: rotate(180deg);
-    }
+    &:hover { color: $orange; }
   }
 }
 
-.navbar.scrolled {
-  padding: 10px 60px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-}
+.dropdown-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 6px;
+  background: #f8fafc;
+  border-left: 3px solid $orange;
 
-
-// ================================================
-// TABLET & MOBILE  (≤ 992px)
-// ================================================
-@media (max-width: 992px) {
-
-  .navbar {
-    padding: 12px 16px !important;
-    gap: 10px;
-  }
-
-  .navbar.scrolled {
-    padding: 8px 16px !important;
-  }
-
-  .navbar .desktop-contact-section {
-    display: none !important;
-  }
-
-  .navbar .mobile-actions {
-    display: flex !important;
-  }
-
-  .navbar .hamburger {
-    display: flex !important;
-  }
-
-  .navbar .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 10px 0;
-    max-height: calc(100dvh - 70px);
-    overflow-y: auto;
-    flex: unset;
-    margin: 0;
-    gap: 0;
-    border-bottom: 1px solid #f1f5f9;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    display: none !important;
-    opacity: 0;
-    transform: translateY(-8px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-
-    &.active {
-      display: flex !important;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    li {
-      width: 100%;
-      border-bottom: 1px solid #f1f5f9;
-
-      a,
-      .dropdown-toggle {
-        padding: 14px 20px;
-        display: block;
-        width: 100%;
-        text-align: left;
-        font-size: 15px;
-      }
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-
-    .dropdown {
-      padding-bottom: 0;
-      margin-bottom: 0;
-
-      .dropdown-menu {
-        position: static !important;
-        box-shadow: none !important;
-        background: #f8fafc !important;
-        border: none !important;
-        border-left: 3px solid #f97316 !important;
-        border-radius: 0 !important;
-        border-top: none !important;
-        margin: 0;
-        padding: 0;
-        min-width: unset;
-
-        &::before { display: none; }
-
-        li a {
-          padding: 11px 20px 11px 36px !important;
-          font-size: 14px;
-        }
-      }
-    }
+  a {
+    min-height: 44px;
+    padding-left: 32px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #475569;
   }
 }
 
+small {
+  display: inline-block;
+  transition: transform 0.3s;
 
-// ================================================
-// MEDIUM MOBILE  (≤ 768px)
-// ================================================
-@media (max-width: 768px) {
-
-  .navbar {
-    padding: 10px 12px !important;
-  }
-
-  .navbar.scrolled {
-    padding: 6px 12px !important;
-  }
-
-  .navbar .logo img {
-    height: 40px;
-  }
-
-  .navbar .mobile-phone-link {
-    font-size: 12px;
-
-    .phone-number { font-size: 11px; }
-    .phone-icon   { font-size: 16px; }
-  }
-
-  .navbar .mobile-brochure-btn {
-    padding: 5px 8px;
-
-    .btn-text  { display: none; }
-    .pdf-icon  { font-size: 18px; }
-  }
-
-  .navbar .hamburger {
-    font-size: 24px;
-  }
-}
-
-
-// ================================================
-// SMALL MOBILE  (≤ 576px)
-// ================================================
-@media (max-width: 576px) {
-
-  .navbar {
-    padding: 8px 10px !important;
-  }
-
-  .navbar.scrolled {
-    padding: 4px 10px !important;
-  }
-
-  .navbar .logo img {
-    height: 32px;
-  }
-
-  .navbar .mobile-phone-link {
-    padding: 4px;
-
-    .phone-number { display: none; }
-    .phone-icon   { font-size: 20px; }
-  }
-
-  .navbar .mobile-brochure-btn {
-    padding: 4px 6px;
-
-    .btn-text  { display: none; }
-    .pdf-icon  { font-size: 18px; }
-  }
-
-  .navbar .hamburger {
-    font-size: 22px;
-  }
-
-  .navbar .nav-links {
-    li a,
-    li .dropdown-toggle {
-      padding: 11px 14px;
-      font-size: 13px;
-    }
-
-    .dropdown .dropdown-menu li a {
-      padding: 10px 14px 10px 28px !important;
-      font-size: 12px;
-    }
-  }
+  &.rotate { transform: rotate(180deg); }
 }
 
 // Dim page behind the open mobile menu; tapping it closes the menu
@@ -464,14 +189,172 @@
   z-index: 999;
 }
 
-@media (min-width: 993px) {
-  .menu-backdrop { display: none; }
+@keyframes menuIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
 }
 
-@media (max-width: 992px) {
-  .navbar .dropdown .dropdown-menu.products-menu {
+// ================================================
+// LARGER PHONES / SMALL TABLETS (≥ 480px)
+// ================================================
+@media (min-width: 480px) {
+  .navbar { height: 64px; padding: 0 12px 0 16px; }
+
+  .logo img { height: 40px; }
+
+  .nav-links { max-height: calc(100dvh - 64px); }
+
+  .mobile-phone-link .phone-number { display: inline; }
+}
+
+// ================================================
+// TABLETS (≥ 768px)
+// ================================================
+@media (min-width: 768px) {
+  .navbar { height: 72px; padding: 0 20px; }
+
+  .logo img { height: 44px; }
+
+  .mobile-brochure-btn {
+    background: $red;
+    color: #fff;
+    padding: 0 12px;
+
+    .pdf-icon { background: none; width: auto; height: auto; }
+    .btn-text { display: inline; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+  }
+}
+
+// ================================================
+// DESKTOP (≥ 993px)
+// ================================================
+@media (min-width: 993px) {
+  .navbar {
+    height: 84px;
+    padding: 0 40px;
+    gap: 20px;
+
+    &.scrolled { height: 68px; }
+  }
+
+  .logo img { height: 48px; }
+
+  .mobile-actions,
+  .menu-backdrop { display: none; }
+
+  .nav-links {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex: 1;
     max-height: none;
     overflow: visible;
-    min-width: unset;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    &.active { animation: none; }
+
+    > li { border: none; }
+
+    a,
+    .dropdown-toggle {
+      min-height: 40px;
+      padding: 0;
+      width: auto;
+      gap: 4px;
+    }
   }
+
+  .dropdown {
+    position: relative;
+    // invisible bridge so the menu doesn't close while moving the mouse down
+    padding-bottom: 12px;
+    margin-bottom: -12px;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    min-width: 260px;
+    padding: 8px 0;
+    background: #fff;
+    border-left: none;
+    border-top: 3px solid $orange;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+    a {
+      min-height: 44px;
+      padding: 0 22px;
+      width: 100%;
+
+      &:hover { background: #f8fafc; }
+    }
+  }
+
+  .desktop-contact-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .phone-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    color: $navy;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.3s;
+
+    .phone-icon { font-size: 18px; }
+
+    &:hover {
+      color: $orange;
+      border-color: #fed7aa;
+      background: #fff3e8;
+    }
+  }
+
+  .brochure-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 22px;
+    background: $red;
+    border: 2px solid $red;
+    border-radius: 6px;
+    color: #fff;
+    font: 700 13px 'Inter', sans-serif;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.3s;
+
+    .pdf-icon { font-size: 16px; }
+
+    &:hover {
+      background: transparent;
+      color: $red;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar { padding: 0 60px; }
+  .nav-links { gap: 32px; }
 }

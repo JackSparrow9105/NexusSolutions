@@ -3,19 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PRODUCTS, ProductSpec } from '../../shared/product-data';
+import { PRODUCTS, CATEGORIES, ProductCategory, Product, getCategory, productsInCategory } from '../../shared/product-data';
 import { openWhatsAppLink } from '../../shared/whatsapp';
 
-interface FeaturedProduct {
-  title: string;
-  category: string;
-  image: string;
-  description: string;
-  specs: ProductSpec[];
-}
-
 interface HeroSlide {
-  image: string;
+  /** base name in assets/hero/ – each image exists as -800.webp (phones) and -1600.webp (desktop) */
+  name: string;
   label: string;
 }
 
@@ -130,7 +123,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const subject = encodeURIComponent(`Inquiry from ${this.contactForm.name.trim()}`);
     const body = encodeURIComponent(this.buildEnquiryText());
     // Same tab: window.open on a mailto: link leaves an empty tab behind in most browsers
-    window.location.href = `mailto:info@mynexussolutions.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@mynexussolutions.in?subject=${subject}&body=${body}`;
     this.showToastMessage('Opening your email app…', 'success');
   }
 
@@ -154,22 +147,28 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private prefillFromProduct(productId: string): void {
     const product = PRODUCTS.find(p => p.id === productId);
     if (!product) return;
-    if (this.serviceOptions.includes(product.category)) this.contactForm.service = product.category;
+    const categoryName = getCategory(product.category)?.name;
+    if (categoryName && this.serviceOptions.includes(categoryName)) this.contactForm.service = categoryName;
     if (!this.contactForm.message.trim()) {
       this.contactForm.message = `I am interested in ${product.title}. Please share price and availability.`;
     }
   }
 
   // ================= HERO SLIDER =================
-  // ... (unchanged, keep your existing code)
   heroSlides: HeroSlide[] = [
-    { image: 'assets/warehouse1.png', label: 'Solar & Lightning Protection' },
-    { image: 'assets/manInstallingArrester.png', label: 'Industrial Power Infrastructure' },
-    { image: 'assets/LoadingTruck.png', label: 'Industrial Power Infrastructure' },
+    { name: 'warehouse1', label: 'Solar & Lightning Protection' },
+    { name: 'manInstallingArrester', label: 'Industrial Power Infrastructure' },
+    { name: 'LoadingTruck', label: 'Industrial Power Infrastructure' },
   ];
+
+  heroSrc(slide: HeroSlide, size: 800 | 1600): string {
+    return `assets/hero/${slide.name}-${size}.webp`;
+  }
 
   heroSlide = 0;
   slideLabelVisible = false;
+  /** slides 2 & 3 start downloading only after the first one is on screen */
+  restOfSlidesReady = false;
 
   private heroTimer: any;
   private labelTimer: any;
@@ -220,10 +219,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
-    const categories = new Set(PRODUCTS.map(p => p.category));
     this.serviceOptions = [
       'All Products',
-      ...Array.from(categories).sort(),
+      ...CATEGORIES.map(c => c.name),
       'Other / General Inquiry'
     ];
     this.contactForm.service = this.serviceOptions[0];
@@ -235,6 +233,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => (this.restOfSlidesReady = true), 1500);
     this.startHeroTimer();
     this.testimonialTimer = setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % this.testimonials.length;
@@ -250,74 +249,26 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     document.body.style.overflow = '';
   }
 
-  // ================= PRODUCT MODAL =================
-  selectedProduct: FeaturedProduct | null = null;
+  // ================= KEY PRODUCTS (category popups) =================
+  readonly keyCategories: ProductCategory[] = CATEGORIES.filter(c => c.featured);
+  selectedCategory: ProductCategory | null = null;
+  categoryProducts: Product[] = [];
 
-  productDetails: { [key: string]: FeaturedProduct } = {
-    earthing: {
-      category: 'Earthing Pipes & Rods',
-      title: 'Earthing Systems',
-      image: 'assets/Products/gi-earthing-electrode.jpg',
-      description: 'High-conductivity chemical earthing solutions designed for life-long durability and low resistance.',
-      specs: [
-        { label: 'Material', value: 'GI, Copper Bonded, or Pure Copper' },
-        { label: 'Backfill', value: 'High-quality BFC Compound' },
-        { label: 'Standard', value: 'IEEE 80 / IS 3043 Compliant' },
-        { label: 'Fault Current Capacity', value: 'Up to 50kA' }
-      ]
-    },
-    lightning: {
-      category: 'Lightning Protection',
-      title: 'Lightning Arresters',
-      image: 'assets/Products/arrester.jpg',
-      description: 'Advanced ESE and conventional rods to safeguard structures from direct strikes.',
-      specs: [
-        { label: 'Protection Radius', value: 'Up to 107 Meters (Level IV)' },
-        { label: 'Material', value: 'Stainless Steel 304/316' },
-        { label: 'Technology', value: 'ESE (Early Streamer Emission)' },
-        { label: 'Testing', value: 'High Voltage Laboratory Tested' }
-      ]
-    },
-    solar: {
-      category: 'Solar & BOS',
-      title: 'Solar BOS Components',
-      image: 'assets/Products/BOS.png',
-      description: 'Complete Balance of System kits for residential and commercial solar installations.',
-      specs: [
-        { label: 'Components', value: 'ACDB, DCDB, MC4 Connectors' },
-        { label: 'Enclosure', value: 'IP65/66 Weatherproof' },
-        { label: 'Protection', value: 'Built-in SPD and Fuse' },
-        { label: 'Compatibility', value: 'Up to 1500V DC Systems' }
-      ]
-    },
-    cables: {
-      category: 'Wires & Cables',
-      title: 'DC Cables',
-      image: 'assets/Products/dcCable.jpg',
-      description: 'TUV certified XLPO insulated cables designed for solar power applications.',
-      specs: [
-        { label: 'Core', value: 'Electrolytic Grade Tinned Copper' },
-        { label: 'Life Expectancy', value: '> 25 Years' },
-        { label: 'Resistance', value: 'UV, Ozone, Water Resistant' },
-        { label: 'Temperature Range', value: '-40°C to +120°C' }
-      ]
-    }
-  };
-
-  openModal(type: string): void {
-    this.selectedProduct = this.productDetails[type];
+  openCategory(category: ProductCategory): void {
+    this.selectedCategory = category;
+    this.categoryProducts = productsInCategory(category.id);
     document.body.style.overflow = 'hidden';
   }
 
   closeModal(): void {
-    this.selectedProduct = null;
+    this.selectedCategory = null;
     document.body.style.overflow = '';
   }
 
-  enquireFromModal(product: FeaturedProduct): void {
-    if (this.serviceOptions.includes(product.category)) this.contactForm.service = product.category;
+  enquireCategory(category: ProductCategory): void {
+    if (this.serviceOptions.includes(category.name)) this.contactForm.service = category.name;
     if (!this.contactForm.message.trim()) {
-      this.contactForm.message = `I am interested in ${product.title}. Please share details and a quotation.`;
+      this.contactForm.message = `I am interested in your ${category.name} products. Please share details and a quotation.`;
     }
     this.closeModal();
     setTimeout(() => this.scrollToContact(), 50);
@@ -325,6 +276,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
-    if (this.selectedProduct) this.closeModal();
+    if (this.selectedCategory) this.closeModal();
   }
 }

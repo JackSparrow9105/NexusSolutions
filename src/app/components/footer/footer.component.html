@@ -5,8 +5,8 @@
       <h3 class="logo">Nexus Solutions</h3>
       <p class="tagline">Powering Progress, Protecting Lives</p>
       <p>
-        Pioneering safety through advanced Earthing Systems and Lightning Protection. 
-        Reliable solar solutions for modern infrastructure.
+        Earthing, lightning protection and solar BOS solutions engineered for
+        long-term safety and compliance across India.
       </p>
     </div>
 
@@ -23,32 +23,27 @@
     <div class="footer-col">
       <h4>Our Products</h4>
       <ul>
-        <li><a routerLink="/products" fragment="gi-chemical-earthing-pipe">Chemical Earthing</a></li>
-        <li><a routerLink="/products" fragment="lightning-arrester">ESE Lightning Arresters</a></li>
-        <li><a routerLink="/products" fragment="bos-kit">Solar BOS Kits</a></li>
-        <li><a routerLink="/products" fragment="dc-cable">UV Resistant Cables</a></li>
+        <li *ngFor="let cat of categories">
+          <a routerLink="/products" [queryParams]="{ category: cat.id }">{{ cat.name }}</a>
+        </li>
       </ul>
     </div>
 
     <div class="footer-col">
       <h4>Registered Office</h4>
-      <p style="margin-bottom: 15px;">
+      <p class="address">
         Plot No. 153, Thirumalai Nagar, Pullilion Village,<br>
         Vadaperumbakkam, Chettimedu,<br>
         Madhavaram, Chennai - 600060
       </p>
-      <p><strong>Email:</strong> <a href="mailto:info&#64;mynexussolutions.com">info&#64;mynexussolutions.com</a></p>
+      <p><strong>Email:</strong> <a href="mailto:info&#64;mynexussolutions.in">info&#64;mynexussolutions.in</a></p>
       <p><strong>Phone:</strong> <a href="tel:+918905302210">+91 8905302210</a></p>
-      <div class="social-icons" style="margin-top: 20px;">
-        <span>🌐</span>
-        <span>📘</span>
-        <span>📸</span>
-      </div>
+      <p><strong>Web:</strong> <a href="https://www.mynexussolutions.in" target="_blank" rel="noopener">www.mynexussolutions.in</a></p>
     </div>
 
   </div>
 
   <div class="footer-bottom">
-    © 2026 Nexus Solutions. Precision Engineering for Electrical Safety.
+    © {{ year }} Nexus Solutions. Precision Engineering for Electrical Safety.
   </div>
 </footer>

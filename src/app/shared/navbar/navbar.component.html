@@ -33,9 +33,9 @@
         Products <small [class.rotate]="activeDropdown === 'products'">▾</small>
       </button>
       <ul class="dropdown-menu products-menu" *ngIf="activeDropdown === 'products'">
-        <li><a routerLink="/products" (click)="closeMenu()"><strong>View all products</strong></a></li>
-        <li *ngFor="let item of productsMenu">
-          <a routerLink="/products" [fragment]="item.id" (click)="closeMenu()">{{ item.title }}</a>
+        <li><a routerLink="/products" (click)="closeMenu()"><strong>All Products</strong></a></li>
+        <li *ngFor="let cat of categories">
+          <a routerLink="/products" [queryParams]="{ category: cat.id }" (click)="closeMenu()">{{ cat.name }}</a>
         </li>
       </ul>
     </li>

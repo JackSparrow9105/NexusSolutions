@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PRODUCTS } from '../product-data';
+import { PRODUCTS, getCategory } from '../product-data';
 import { openWhatsAppLink } from '../whatsapp';
 import { AI_ENDPOINT, AI_SUGGESTIONS, AI_WELCOME } from '../ai-config';
 
@@ -34,9 +34,9 @@ export class AiAssistantComponent {
 
   // Compact catalogue sent with each request so the AI only recommends products we actually sell
   private readonly catalog = PRODUCTS.map(p => ({
-    id: p.id,
     title: p.title,
-    category: p.category,
+    ...(p.code ? { code: p.code } : {}),
+    category: getCategory(p.category)?.name,
     description: p.description,
     specs: p.specs.map(s => `${s.label}: ${s.value}`).join('; ')
   }));

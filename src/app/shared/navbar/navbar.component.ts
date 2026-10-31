@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PRODUCTS } from '../product-data';
+import { CATEGORIES } from '../product-data';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +14,7 @@ export class NavbarComponent {
   menuOpen = false;
   activeDropdown: string | null = null;
   isScrolled = false;
-  productsMenu = PRODUCTS;
+  categories = CATEGORIES;
 
   private get isDesktop(): boolean {
     return window.innerWidth > 992;

@@ -1,9 +1,9 @@
 .whatsapp-float {
   position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 40px;
-  right: 40px;
+  width: 52px;
+  height: 52px;
+  bottom: 16px;
+  right: 16px;
   background-color: #25d366;
   color: #FFF;
   border-radius: 50px;
@@ -64,12 +64,17 @@
   100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
-// Adjust position for mobile so it doesn't cover content
-@media (max-width: 768px) {
+// Bigger screens: larger button, further from the edge (mobile-first)
+@media (min-width: 769px) {
   .whatsapp-float {
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
   }
+}
+
+// The tooltip only makes sense with a mouse
+@media (hover: none) {
+  .whatsapp-float .tooltip { display: none; }
 }
