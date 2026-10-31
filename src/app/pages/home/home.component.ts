@@ -200,16 +200,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ================= TESTIMONIALS =================
   testimonials = [
-     {
-      message: 'நம்பகமான மின்னல் பாதுகாப்பு ⭐⭐⭐⭐⭐\nNexus Solutions வழங்கிய மின்னல் தடுப்பானில் நாங்கள் மிகவும் திருப்தியடைந்துள்ளோம். தயாரிப்பின் தரம், நேர்த்தியான முடிப்புப் பணி மற்றும் தொழில்நுட்ப ஆதரவு அனைத்தும் சிறப்பாக இருந்தன. மின்சாரப் பாதுகாப்புத் தீர்வுகளுக்கான நம்பகமான கூட்டாளி.',
-      name: 'S. David',
+    {
+      message: 'சிறந்த மின்னல் தடுப்பான் ⭐⭐⭐⭐⭐\nNexus Solutions-இன் மின்னல் தடுப்பான் எங்கள் கட்டிடத்தின் பாதுகாப்பிற்கு சிறந்த தேர்வாக அமைந்தது. தயாரிப்பை நிறுவுவது எளிதாக இருந்தது; அதன் உறுதியான அமைப்பும் நம்பகமான செயல்திறனும் எங்களுக்கு நல்ல நம்பிக்கையை அளிக்கின்றன. மின்னல் பாதுகாப்பிற்காக பரிந்துரைக்கிறோம்.',
+      name: 'K. Suresh',
       location: 'Chennai'
-    }, 
-     {
+    },
+    {
       message: 'Excellent Product Quality ⭐⭐⭐⭐⭐\nWe recently installed Nexus Solutions chemical earthing material at our facility. The product quality is excellent, and the overall experience has been very satisfying. Highly recommended for reliable earthing solutions.',
       name: 'Venkat Kanna',
       location: 'Trichy'
     },
+     {
+      message: 'Reliable Lightning Protection ⭐⭐⭐⭐⭐\nWe are very happy with the lightning arrester supplied by Nexus Solutions. The product quality, finishing and technical support were impressive. A reliable partner for electrical safety solutions.',
+      name: 'S. David',
+      location: 'Chennai'
+    },  
    {
       message: 'Professional Service ⭐⭐⭐⭐⭐\nFrom product selection to installation support, Nexus Solutions provided excellent service. Their team is knowledgeable, professional and cooperative. We are satisfied with their products and services.',
       name: 'Saravanan',
@@ -229,17 +234,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       message: 'Excellent Customer Support ⭐⭐⭐⭐⭐\nReally impressed with the customer support from Nexus Solutions. Their team helped us select the right earthing and lightning protection materials for our requirements. Great coordination and service.',
       name: 'Karthik',
       location: 'Hyderabad'
-    },
-     {
-      message: 'Value for Money ⭐⭐⭐⭐⭐\nGood product quality at competitive pricing. We installed Nexus Solutions earthing materials and lightning arresters at our project site and are satisfied with the overall supply and support.' ,
-      name: 'Bharath',
-      location: 'Bengaluru'
-    },
+    }, 
      {
       message: 'വിശ്വസനീയമായ ഊർജ്ജ പരിഹാര പങ്കാളി ⭐⭐⭐⭐⭐\nNexus Solutions-ൽ നിന്ന് കെമിക്കൽ എർത്തിംഗ് സാമഗ്രികളും മിന്നൽ സംരക്ഷണ ഉപകരണവും വാങ്ങി ഞങ്ങളുടെ പദ്ധതിയിൽ സ്ഥാപിച്ചു. ഉൽപ്പന്നങ്ങളുടെ ഗുണനിലവാരം വളരെ മികച്ചതാണ്. കമ്പനിയുടെ സേവനം, സമയബന്ധിതമായ വിതരണം, സാങ്കേതിക പിന്തുണ എന്നിവയെല്ലാം പ്രശംസനീയമാണ്. വൈദ്യുത സുരക്ഷയ്ക്കും എർത്തിംഗ് ആവശ്യങ്ങൾക്കും Nexus Solutions മികച്ച തിരഞ്ഞെടുപ്പാണ്. തീർച്ചയായും മറ്റുള്ളവർക്കും ശുപാർശ ചെയ്യുന്നു!',
       name: 'R. Joseph',
       location: 'Kerala'
-    } 
+    },
+      {
+      message: 'Value for Money ⭐⭐⭐⭐⭐\nGood product quality at competitive pricing. We installed Nexus Solutions earthing materials and lightning arresters at our project site and are satisfied with the overall supply and support.' ,
+      name: 'Bharath',
+      location: 'Bengaluru'
+    },
   ];
 
   currentSlide = 0;
