@@ -201,41 +201,41 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // ================= TESTIMONIALS =================
   testimonials = [
      {
-      message: 'Since installing solar, I have seen a big reduction in my electricity bills.',
+      message: 'Excellent Product Quality ⭐⭐⭐⭐⭐\nWe recently installed Nexus Solutions chemical earthing material at our facility. The product quality is excellent, and the overall experience has been very satisfying. Highly recommended for reliable earthing solutions.',
       name: 'Venkat Kanna',
       location: 'Trichy'
     },
     {
-      message: 'சேவை மிகவும் சிறப்பாக இருந்தது; நிறுவலும் விரைவாக முடிந்தது. நிச்சயமாக பரிந்துரைக்கிறேன்.',
+      message: 'Reliable Lightning Protection ⭐⭐⭐⭐⭐\nWe are very happy with the lightning arrester supplied by Nexus Solutions. The product quality, finishing and technical support were impressive. A reliable partner for electrical safety solutions.',
       name: 'S David',
       location: 'Chennai'
     }, {
-      message: 'I am paying much less for electricity after switching to solar.',
+      message: 'Professional Service ⭐⭐⭐⭐⭐\nFrom product selection to installation support, Nexus Solutions provided excellent service. Their team is knowledgeable, professional and cooperative. We are satisfied with their products and services.',
       name: 'Saravanan',
       location: 'Vijayawada'
     }, 
      {
-      message: 'Solar has helped me cut down my electricity expenses considerably.',
+      message: 'Dependable ⭐⭐⭐⭐⭐\nNexus Solutions has provided us with dependable earthing and lightning protection products. Their professional approach and commitment to customer satisfaction make them a good choice.',
       name: 'R Vijay',
       location: 'Coimbatore'
     },
      {
-      message: 'தொழில்முறை அணுகுமுறையும் தரமான பொருட்களும் இந்த அனுபவத்தை சிறப்பாக்கின.',
+      message: 'Recommended for Industrial Projects ⭐⭐⭐⭐⭐\nWe used Nexus Solutions products for our industrial electrical safety requirements. The products were properly finished, well-packed and delivered professionally. We look forward to working with them again.',
       name: 'Krishnamoorthy',
       location: 'Salem'
     },
      {
-      message: 'My electricity bills have come down significantly since the solar installation.',
+      message: 'Excellent Customer Support ⭐⭐⭐⭐⭐\nReally impressed with the customer support from Nexus Solutions. Their team helped us select the right earthing and lightning protection materials for our requirements. Great coordination and service.',
       name: 'Karthik',
       location: 'Hyderabad'
     },
      {
-      message: 'Installing solar has made a noticeable difference to my electricity costs.',
+      message: 'Value for Money ⭐⭐⭐⭐⭐\nGood product quality at competitive pricing. We installed Nexus Solutions earthing materials and lightning arresters at our project site and are satisfied with the overall supply and support.' ,
       name: 'Bharath',
       location: 'Bengaluru'
     },
      {
-      message: 'I have seen substantial savings on my electricity bills with solar.',
+      message: 'Trusted Energy Solutions Partner ⭐⭐⭐⭐⭐\nNexus Solutions நிறுவனத்திடமிருந்து Chemical Earthing Material மற்றும் Lightning Arrester வாங்கி எங்கள் திட்டத்தில் நிறுவியுள்ளோம். பொருட்களின் தரம் மிகவும் சிறப்பாக உள்ளது. நிறுவனத்தின் சேவை, சரியான நேரத்தில் டெலிவரி மற்றும் தொழில்நுட்ப ஆதரவு அனைத்தும் பாராட்டத்தக்கது. மின்சார பாதுகாப்பு மற்றும் எர்திங் தேவைகளுக்கு Nexus Solutions ஒரு சிறந்த தேர்வு. நிச்சயமாக மற்றவர்களுக்கும் பரிந்துரைக்கிறோம்!',
       name: 'R. Joseph',
       location: 'Kerala'
     } 
