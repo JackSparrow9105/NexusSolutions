@@ -10,6 +10,8 @@ interface HeroSlide {
   /** base name in assets/hero/ – each image exists as -800.webp (phones) and -1600.webp (desktop) */
   name: string;
   label: string;
+  /** which part of the photo stays visible when phones crop it (CSS object-position) */
+  focus?: string;
 }
 
 @Component({
@@ -156,10 +158,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ================= HERO SLIDER =================
   heroSlides: HeroSlide[] = [
-    { name: 'warehouse1', label: 'Solar & Lightning Protection' },
-    { name: 'manInstallingArrester', label: 'Industrial Power Infrastructure' },
-    { name: 'LoadingTruck', label: 'Industrial Power Infrastructure' },
-  ];
+    { name: 'factory', label: 'Earthing & Lightning Protection Products' },
+    { name: 'solar', label: 'Solar BOS & Power Infrastructure', focus: '60% center' },
+    { name: 'lightning', label: 'Lightning Protection & Earthing', focus: '76% 62%' },
+  ]
 
   heroSrc(slide: HeroSlide, size: 800 | 1600): string {
     return `assets/hero/${slide.name}-${size}.webp`;

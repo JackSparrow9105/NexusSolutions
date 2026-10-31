@@ -8,6 +8,7 @@
       *ngIf="i === 0 || restOfSlidesReady"
       class="slide"
       [class.active]="i === heroSlide"
+      [style.object-position]="slide.focus || 'center'"
       [src]="heroSrc(slide, 800)"
       [attr.srcset]="heroSrc(slide, 800) + ' 800w, ' + heroSrc(slide, 1600) + ' 1600w'"
       sizes="100vw"
