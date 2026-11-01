@@ -27,7 +27,8 @@
             "inlineStyleLanguage": "scss",
      "assets": [
   "src/favicon.ico",
-  "src/assets"
+  "src/assets",
+  "src/sitemap.xml"
 ],
             "styles": [
               
@@ -96,7 +97,8 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "baseHref": "/NexusSolutions/"
+            "baseHref": "/",
+            "cname": "www.mynexussolutions.in"
           }
         }
       }
