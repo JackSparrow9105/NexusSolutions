@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- List of pages for Google. Add a <url> block when you add a page, and update <lastmod> when a page changes. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.mynexussolutions.in/</loc>
+    <lastmod>2026-11-02</lastmod>
+  </url>
+  <url>
+    <loc>https://www.mynexussolutions.in/products/</loc>
+    <lastmod>2026-11-02</lastmod>
+  </url>
+</urlset>
